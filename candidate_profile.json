@@ -1,0 +1,596 @@
+{
+  "personal_info": {
+    "full_name": "Yogita Mittal",
+    "email": "yogitamittal.tech@gmail.com",
+    "portfolio": "https://tinyurl.com/YogiFolio",
+    "location": "India / Remote",
+    "title": "Full Stack Engineer & AI Integration Specialist"
+  },
+  "career_narrative": {
+    "elevator_pitch": "Yogita Mittal is a results-driven Full Stack Engineer with 13+ years of experience in architecting and deploying scalable web platforms and AI-integrated solutions for global brands. She excels in end-to-end product ownership, from design and infrastructure automation to front-end UX and back-end performance, leveraging Python, JavaScript, React, Next.js, and SQL. With a proven track record in e-commerce, SaaS, and MarTech domains, she consistently improves speed, reliability, conversion, and user engagement, while actively expanding expertise in Machine Learning and AI systems.",
+    "tone_guidelines": "Professional, results-driven, technical, emphasizes ownership, measurable impact, and a blend of deep full-stack expertise with emerging AI/ML capabilities. Acknowledges maiden name 'Singla' for official documents."
+  },
+  "experiences": [
+    {
+      "company": "Measured",
+      "title": "Marketing Engineering Owner / Wordpress Developer",
+      "start_date": "Oct 2023",
+      "end_date": "Present",
+      "bullet_points": [
+        "Sole Technical Owner for the global marketing ecosystem, managing WordPress, HubSpot, and CRM integrations.",
+        "Engineered high-performance landing pages and custom GTM/Clearbit data-enrichment flows for lead generation.",
+        "Architected a custom SEO and pagination system that improved site health from 78% to 98%.",
+        "Strategic decision-maker for the marketing stack, including tool procurement, plugin security, and API scaling.",
+        "Optimized and scaled a high-traffic website by reducing load speed from 3.5s to 0.7s, leveraging caching, CDN (CloudFront), and efficient asset management, ensuring seamless user experience during peak traffic.",
+        "Optimized website content, FAQ Schemas, images and videos using tools like S3 bucket, CloudFront, CDN services.",
+        "Developed reusable and scalable React components, reducing redundant code and improving frontend performance.",
+        "Integrated Clearbit using HubSpot in various forms, increasing form submissions by 20%.",
+        "Implemented scalable infrastructure by containerizing WordPress with CI/CD pipelines and Docker, reducing deployment time and improving maintainability for a growing user base.",
+        "Collaborated with design and content teams to enhance visual consistency and lead conversion.",
+        "Built and updated the Events, FAQs, and Resources sections with paginated structures."
+      ],
+      "citation": "portfolio_website, AIintegrationEngg.pdf, FullstackML.pdf, PHPresume.pdf, portfolio.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, Yogita Singla Candidate CV by Calyptus.pdf, Yogita-SeniorFrontendArchitect.pdf, Yogita_Buffer_Resume.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV.pdf, YogitaCV2025.pdf, Yogitadev.pdf, YogitaMarketingResume.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf, YogitaWorkSamples.pdf"
+    },
+    {
+      "company": "Gardens Alive! / Kinerk Direct Marketing Solutions",
+      "title": "Software Developer",
+      "start_date": "Feb 2018",
+      "end_date": "Feb 2022",
+      "bullet_points": [
+        "Developed, scaled, and maintained a portfolio of 15+ brand eCommerce websites using PHP, Laravel, and MySQL.",
+        "Migrated legacy codebases to a modular architecture, leading to a measurable 40% improvement in average page load times.",
+        "Integrated personalized email automation flows and marketing APIs that increased conversion rates by 20% across the brand portfolio.",
+        "Led cross-functional initiatives to improve UX and accessibility, achieving over 95% compliance with WCAG 2.1 AA standards across all public sites.",
+        "Conducted comprehensive tests on websites to optimize sales and performance which resulted in approx. 3X revenue on two major brands during Covid.",
+        "Major work on CommerceV3 platform with Smarty PHP, JavaScript, CSS, HTML, jQuery, JSON.",
+        "Full ownership to frontend and backend redesign for Breck's Gifts and its 20 sister companies.",
+        "Diagnosed and resolved revenue-impacting cart and checkout issues.",
+        "Modernized legacy PHP architecture with structured JavaScript improvements."
+      ],
+      "citation": "AIintegrationEngg.pdf, FullstackML.pdf, PHPresume.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, Yogita Singla Candidate CV by Calyptus.pdf, Yogita-SeniorFrontendArchitect.pdf, Yogita_Buffer_Resume.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV.pdf, YogitaCV2025.pdf, Yogitadev.pdf, YogitaMarketingResume.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf"
+    },
+    {
+      "company": "Gardens Alive!",
+      "title": "Web Administrator",
+      "start_date": "Jul 2013",
+      "end_date": "Feb 2018",
+      "bullet_points": [
+        "Managed bulk email campaigns, coding them, deploying, testing and segmenting across multiple platforms, including Kalio, Whatcounts, and Silverpop.",
+        "Pioneered the implementation of responsive emails, resulting in the highest email revenue and successful conversion of dead leads into buyers. This achievement led to a shift in focus from catalogs to email marketing for four brands.",
+        "Ensured 24/7 uptime and availability of all e-commerce platforms."
+      ],
+      "citation": "resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, Yogita Singla Candidate CV by Calyptus.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf"
+    },
+    {
+      "company": "Gardens Alive!",
+      "title": "Junior Web Administrator",
+      "start_date": "Jul 2012",
+      "end_date": "Jul 2013",
+      "bullet_points": [
+        "Collaborated with web masters and developers to deliver visually appealing and user-friendly web designs ensuring 24/7 uptime and availability of web platforms.",
+        "Developed a shortcut which reduced manual effort by 95%."
+      ],
+      "citation": "resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, Yogita Singla Candidate CV by Calyptus.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Singla_Updated_Resume.pdf"
+    },
+    {
+      "company": "Gardens Alive!",
+      "title": "Process Associate",
+      "start_date": "Jan 2012",
+      "end_date": "Jul 2012",
+      "bullet_points": [
+        "Recognized for outstanding performance, receiving a certificate of appreciation for positive customer feedback."
+      ],
+      "citation": "resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, Yogita Singla Candidate CV by Calyptus.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Singla_Updated_Resume.pdf"
+    },
+    {
+      "company": "Freelance AI/Full-Stack Developer",
+      "title": "Freelance AI/Full-Stack Developer",
+      "start_date": "Feb 2022",
+      "end_date": "Present",
+      "bullet_points": [
+        "Designed and implemented 5+ custom full-stack solutions for SaaS and marketing clients using Next.js, React, Tailwind CSS, and Python/Node back-ends.",
+        "Integrated OpenAI API to develop automated chat and content generation systems, reducing client manual effort by an estimated 30%.",
+        "Built and deployed microservices projects in Dockerized environments using PostgreSQL, ensuring modularity and scalability for future AI feature expansion.",
+        "Optimized CI/CD pipelines (GitHub Actions + AWS), automating deployment and testing cycles to achieve 99.9% uptime for client applications.",
+        "Delivered custom AI and automation solutions (OpenAI, microservices, Python/Node).",
+        "Built robust SaaS and ad-tech projects for agencies and publishers."
+      ],
+      "citation": "AIintegrationEngg.pdf, Resume.pdf, Yogita (1).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Singla.pdf"
+    },
+    {
+      "company": "Red Rock Taxes",
+      "title": "Web Developer / Technical Consultant",
+      "start_date": "Jun 2010",
+      "end_date": "Dec 2011",
+      "bullet_points": [
+        "Delivered full-stack web development and technical consulting for multiple client websites and digital platforms.",
+        "Managed DNS configuration, domain transfers, hosting environments, SSL setup, and server/infrastructure troubleshooting.",
+        "Executed domain migrations, DNS transfers, and infrastructure transitions while preserving SEO equity through strategic redirect mapping, canonicalization, and technical SEO safeguards.",
+        "Performed website optimization across frontend performance, technical SEO, caching, and load-time improvements.",
+        "Worked directly with clients to scope requirements, estimate technical work, and deliver custom web solutions."
+      ],
+      "citation": "YogitaPHP-JS.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf"
+    },
+    {
+      "company": "Pioneer Mathematics",
+      "title": "Marketing Co-ordinator",
+      "start_date": "Sep 2011",
+      "end_date": "Jan 2012",
+      "bullet_points": [
+        "Implemented social, print, email, and offline campaigns to enhance brand awareness among target customer demographics setting highest sales records.",
+        "Tracked and reported on marketing campaign responses, contributing to campaign optimization converting even overseas clients for NCERT packages."
+      ],
+      "citation": "resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, Yogita Singla Candidate CV by Calyptus.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Singla_Updated_Resume.pdf, yogitaSingla.pdf"
+    }
+  ],
+  "skills": {
+    "languages": [
+      "JavaScript",
+      "Python",
+      "PHP",
+      "TypeScript",
+      "HTML5",
+      "CSS3",
+      "SQL",
+      "C",
+      "C++"
+    ],
+    "frameworks": [
+      "React",
+      "Next.js",
+      "Node.js",
+      "Express.js",
+      "jQuery",
+      "Smarty PHP",
+      "Laravel",
+      "Tailwind CSS",
+      "Redux",
+      "Nest.js",
+      "Vue.js",
+      "Astro",
+      "GSAP",
+      "CSS Animations",
+      "chart.js",
+      "NumPy",
+      "Pandas",
+      "Scikit-learn",
+      "TensorFlow",
+      "PyTorch",
+      "HuggingFace"
+    ],
+    "databases": [
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB",
+      "SQLite",
+      "Redis",
+      "Clickhouse",
+      "Supabase"
+    ],
+    "tools_platforms": [
+      "Docker",
+      "Git",
+      "GitHub",
+      "Bitbucket",
+      "CI/CD Pipelines",
+      "AWS S3",
+      "AWS CloudFront",
+      "Cloudflare",
+      "Vercel",
+      "Render",
+      "HubSpot",
+      "Clearbit",
+      "Google Tag Manager (GTM)",
+      "SEMrush",
+      "Ahrefs",
+      "Klaviyo",
+      "Silverpop",
+      "Kalio",
+      "CommerceV3",
+      "WordPress",
+      "WooCommerce",
+      "Shopify",
+      "ZohoCommerce",
+      "Figma",
+      "Jira",
+      "Trello",
+      "Postman",
+      "Lighthouse",
+      "GTMetrix",
+      "Webpack",
+      "Vite",
+      "ESBuild",
+      "Composer",
+      "NPM",
+      "Gulp",
+      "Jupyter/Colab",
+      "Cursor",
+      "ChatGPT",
+      "Claude",
+      "GitHub Copilot",
+      "Apache",
+      "Nginx",
+      "Terraform",
+      "Kubernetes",
+      "CircleCI",
+      "Whatcounts",
+      "BriteVerify",
+      "Mailchimp",
+      "Stripe",
+      "Asana",
+      "Zoom",
+      "Skype",
+      "Uptimerobot",
+      "ACFs",
+      "WP-Offload",
+      "PowerReviews",
+      "Adobe Target"
+    ],
+    "citations": {
+      "JavaScript": "portfolio_website, AIintegrationEngg.pdf, FullstackML.pdf, PHPresume.pdf, portfolio.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, Yogita Singla Candidate CV by Calyptus.pdf, Yogita-SeniorFrontendArchitect.pdf, Yogita_Buffer_Resume.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV.pdf, YogitaCV2025.pdf, Yogitadev.pdf, YogitaMarketingResume.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf, YogitaWorkSamples.pdf",
+      "Python": "portfolio_website, AIintegrationEngg.pdf, FullstackML.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, Yogita Singla Candidate CV by Calyptus.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV2025.pdf, Yogitadev.pdf, YogitaMarketingResume.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf",
+      "PHP": "portfolio_website, AIintegrationEngg.pdf, FullstackML.pdf, PHPresume.pdf, portfolio.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, Yogita Singla Candidate CV by Calyptus.pdf, Yogita-SeniorFrontendArchitect.pdf, Yogita_Buffer_Resume.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV.pdf, YogitaCV2025.pdf, Yogitadev.pdf, YogitaMarketingResume.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf, YogitaWorkSamples.pdf",
+      "TypeScript": "AIintegrationEngg.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, SrProdEngg.pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV.pdf, Yogitadev.pdf, YogitaMarketingResume.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf",
+      "HTML5": "AIintegrationEngg.pdf, FullstackML.pdf, PHPresume.pdf, portfolio.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV.pdf, YogitaCV2025.pdf, Yogitadev.pdf, YogitaMarketingResume.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf, YogitaWorkSamples.pdf",
+      "CSS3": "AIintegrationEngg.pdf, FullstackML.pdf, PHPresume.pdf, portfolio.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV.pdf, YogitaCV2025.pdf, Yogitadev.pdf, YogitaMarketingResume.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf, YogitaWorkSamples.pdf",
+      "SQL": "portfolio_website, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Singla.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, yogitaSingla.pdf",
+      "C": "resume (2).pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, Yogita Singla Candidate CV by Calyptus.pdf, YogitaCV2025.pdf, YogitaResume.pdf, YogitaResume2025.pdf, yogitaSinglaResume.pdf",
+      "C++": "resume (2).pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, Yogita Singla Candidate CV by Calyptus.pdf, YogitaCV2025.pdf, YogitaResume.pdf, YogitaResume2025.pdf, yogitaSinglaResume.pdf",
+      "React": "portfolio_website, AIintegrationEngg.pdf, FullstackML.pdf, PHPresume.pdf, portfolio.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Buffer_Resume.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV.pdf, YogitaCV2025.pdf, Yogitadev.pdf, YogitaMarketingResume.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf, YogitaWorkSamples.pdf",
+      "Next.js": "portfolio_website, AIintegrationEngg.pdf, FullstackML.pdf, PHPresume.pdf, portfolio.pdf, Resume.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Buffer_Resume.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, Yogitadev.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf",
+      "Node.js": "portfolio_website, AIintegrationEngg.pdf, FullstackML.pdf, PHPresume.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Buffer_Resume.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV2025.pdf, Yogitadev.pdf, YogitaMarketingResume.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf",
+      "Express.js": "portfolio_website, FullstackML.pdf, SrProdEngg.pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, Yogitadev.pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaSeniorDev.pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf",
+      "jQuery": "portfolio_website, portfolio.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaWorkSamples.pdf, yogitaSinglaResume.pdf",
+      "Smarty PHP": "portfolio_website, PHPresume.pdf, resume (2).pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, FullstackML.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaML (1).pdf, YogitaPHP-JS.pdf, YogitaSrDev (3).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla.pdf, YogitaWorkSamples.pdf",
+      "Laravel": "AIintegrationEngg.pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaMarketingResume.pdf, yogitaSinglaResume.pdf",
+      "Tailwind CSS": "AIintegrationEngg.pdf, Resume.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf",
+      "Redux": "SrProdEngg.pdf, YogitaMittal-FullStack.pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf",
+      "Nest.js": "portfolio_website, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, YogitaSrDev (4).pdf",
+      "Vue.js": "Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, YogitaMarketingResume.pdf",
+      "Astro": "Yogita_Revamped_Resume.pdf",
+      "GSAP": "Yogita_Revamped_Resume.pdf",
+      "chart.js": "Yogita_Revamped_Resume.pdf",
+      "NumPy": "portfolio_website, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Singla.pdf, YogitaML.pdf, YogitaSrDev (4).pdf, YogitaSrFrontend.pdf",
+      "Pandas": "portfolio_website, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Singla.pdf, YogitaML.pdf, YogitaSrDev (4).pdf, YogitaSrFrontend.pdf",
+      "Scikit-learn": "portfolio_website, FullstackML.pdf, SrProdEngg.pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Singla.pdf, YogitaML.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf",
+      "TensorFlow": "portfolio_website, FullstackML.pdf, SrProdEngg.pdf, YogitaML.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf",
+      "PyTorch": "portfolio_website, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf",
+      "HuggingFace": "portfolio_website",
+      "PostgreSQL": "portfolio_website, AIintegrationEngg.pdf, FullstackML.pdf, PHPresume.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, Yogitadev.pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf",
+      "MySQL": "portfolio_website, AIintegrationEngg.pdf, FullstackML.pdf, PHPresume.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV.pdf, YogitaCV2025.pdf, Yogitadev.pdf, YogitaMarketingResume.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf, YogitaWorkSamples.pdf",
+      "MongoDB": "portfolio_website, SrProdEngg.pdf, Resume.pdf, Yogita (3).pdf, YogitaML (2).pdf, YogitaPHP-JS.pdf, YogitaSeniorDev.pdf, YogitaSrDev (2).pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, Yogita_Revamped_Resume.pdf",
+      "SQLite": "portfolio_website, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Singla.pdf",
+      "Redis": "Resume.pdf",
+      "Clickhouse": "Resume.pdf",
+      "Supabase": "portfolio_website, AIintegrationEngg.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf",
+      "Docker": "portfolio_website, AIintegrationEngg.pdf, FullstackML.pdf, PHPresume.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV.pdf, YogitaCV2025.pdf, Yogitadev.pdf, YogitaMarketingResume.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf, YogitaWorkSamples.pdf",
+      "Git": "portfolio_website, AIintegrationEngg.pdf, FullstackML.pdf, PHPresume.pdf, portfolio.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV.pdf, YogitaCV2025.pdf, Yogitadev.pdf, YogitaMarketingResume.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf, YogitaWorkSamples.pdf",
+      "GitHub": "portfolio_website, AIintegrationEngg.pdf, FullstackML.pdf, PHPresume.pdf, portfolio.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV.pdf, YogitaCV2025.pdf, Yogitadev.pdf, YogitaMarketingResume.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf, YogitaWorkSamples.pdf",
+      "Bitbucket": "portfolio.pdf, resume (2).pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, yogitaSinglaResume.pdf, YogitaWorkSamples.pdf",
+      "CI/CD Pipelines": "AIintegrationEngg.pdf, PHPresume.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV.pdf, YogitaCV2025.pdf, Yogitadev.pdf, YogitaMarketingResume.pdf, YogitaML (1).pdf, YogitaML (2).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf, YogitaWorkSamples.pdf",
+      "AWS S3": "portfolio_website, resume (2).pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaWorkSamples.pdf",
+      "AWS CloudFront": "resume (2).pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla_Updated_Resume.pdf",
+      "Cloudflare": "portfolio_website, resume (2).pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaSrDev (3).pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, YogitaWorkSamples.pdf",
+      "Vercel": "portfolio_website, AIintegrationEngg.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf",
+      "Render": "portfolio_website, AIintegrationEngg.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Mittal_Resume_Updated.pdf",
+      "HubSpot": "portfolio_website, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, portfolio.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, Yogita (1).pdf, Yogita (3).pdf, YogitaMarketingResume.pdf, YogitaML (2).pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaWorkSamples.pdf",
+      "Clearbit": "portfolio_website, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, portfolio.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, YogitaMarketingResume.pdf, YogitaSeniorDev.pdf, YogitaSrDev (3).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf",
+      "Google Tag Manager (GTM)": "portfolio_website, AIintegrationEngg.pdf, Resume.pdf, portfolio.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, YogitaMarketingResume.pdf, YogitaML (2).pdf, YogitaPHP-JS.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf, YogitaWorkSamples.pdf",
+      "SEMrush": "portfolio_website, portfolio.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, Yogita Singla Candidate CV by Calyptus.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaWorkSamples.pdf, yogitaSinglaResume.pdf",
+      "Ahrefs": "AIintegrationEngg.pdf, Resume.pdf, portfolio.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, YogitaMarketingResume.pdf, YogitaSeniorDev.pdf, Yogita_Revamped_Resume.pdf",
+      "Klaviyo": "portfolio.pdf, YogitaMarketingResume.pdf, Yogita_Singla_Updated_Resume.pdf",
+      "Silverpop": "portfolio.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, Yogita Singla Candidate CV by Calyptus.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaML (2).pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf",
+      "Kalio": "portfolio_website, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, portfolio.pdf, Yogita Singla Candidate CV by Calyptus.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, yogitaSinglaResume.pdf",
+      "CommerceV3": "portfolio_website, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, portfolio.pdf, Yogita Singla Candidate CV by Calyptus.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaWorkSamples.pdf, yogitaSinglaResume.pdf",
+      "WordPress": "portfolio_website, portfolio.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, Yogita Singla Candidate CV by Calyptus.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaML (1).pdf, YogitaPHP-JS.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaWorkSamples.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf, yogitaSinglaResume.pdf",
+      "Shopify": "portfolio.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, yogitaSinglaResume.pdf",
+      "ZohoCommerce": "resume (2).pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, yogitaSinglaResume.pdf",
+      "Figma": "portfolio.pdf, resume (2).pdf, Resume.pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Mittal_Senior_UIUX_Portfolio.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaWorkSamples.pdf, yogitaSinglaResume.pdf",
+      "Jira": "portfolio.pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaCV.pdf, YogitaSrDev (3).pdf",
+      "Trello": "portfolio.pdf, Yogita_Mittal_Senior_UIUX_Portfolio.pdf",
+      "Postman": "SrProdEngg.pdf",
+      "Lighthouse": "portfolio_website, PHPresume.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, YogitaML (1).pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf",
+      "GTMetrix": "SrProdEngg.pdf",
+      "Webpack": "Yogita (3).pdf, Yogitadev.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf",
+      "Vite": "Yogitadev.pdf, YogitaSrFrontend.pdf",
+      "ESBuild": "Yogitadev.pdf",
+      "Composer": "Yogita (3).pdf",
+      "NPM": "Yogita (3).pdf, YogitaMittal-FullStack.pdf, YogitaSrFrontend.pdf",
+      "Gulp": "YogitaCV2025.pdf, YogitaResume.pdf, YogitaResume2025.pdf, YogitaWorkSamples.pdf, yogitaSinglaResume.pdf",
+      "Jupyter/Colab": "FullstackML.pdf, YogitaML.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf",
+      "Cursor": "yogitaSingla (1).pdf",
+      "ChatGPT": "yogitaSingla (1).pdf",
+      "Claude": "yogitaSingla (1).pdf",
+      "GitHub Copilot": "yogitaSingla (1).pdf",
+      "Apache": "Yogita (1).pdf, YogitaPHP-JS.pdf, YogitaSrDev (3).pdf",
+      "Nginx": "Yogita (1).pdf, YogitaPHP-JS.pdf, YogitaSrDev (3).pdf",
+      "Terraform": "Resume.pdf, YogitaSrDev (3).pdf",
+      "Kubernetes": "Resume.pdf",
+      "CircleCI": "Resume.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, YogitaSrDev (3).pdf",
+      "Whatcounts": "resume (2).pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YogitaMarketingResume.pdf",
+      "BriteVerify": "portfolio_website, YogitaMittal-FullStack.pdf",
+      "Mailchimp": "Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf",
+      "Stripe": "Yogita (3).pdf",
+      "Asana": "YogitaCV.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf",
+      "Zoom": "YogitaCV.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf",
+      "Skype": "YogitaCV.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf",
+      "Uptimerobot": "YogitaWorkSamples.pdf",
+      "ACFs": "resume (2).pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YogitaWorkSamples.pdf, YogitaResume.pdf, YogitaResume2025.pdf",
+      "WP-Offload": "resume (2).pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YogitaWorkSamples.pdf, YogitaResume.pdf, YogitaResume2025.pdf",
+      "PowerReviews": "YogitaWorkSamples.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaMittal-FullStack.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf",
+      "Adobe Target": "YogitaMarketingResume.pdf"
+    }
+  },
+  "projects": [
+    {
+      "name": "Ideaboard App - Full-Stack Microservices Project",
+      "description": "Built a full-stack Ideaboard and marketing landing page using a Microservices Architecture with an API Gateway, enabling future scalability. Created a dynamic, multi-colored 'Sticky Note' interface delivering a real-time brainstorming experience. Comprehensive documentation in README covers architecture, setup, and scaling decisions.",
+      "tech_stack": [
+        "Next.js",
+        "Node.js",
+        "Express.js",
+        "PostgreSQL",
+        "Docker",
+        "API Gateway"
+      ],
+      "role": "Full-Stack Architect / Developer",
+      "citation": "portfolio_website, AIintegrationEngg.pdf, FullstackML.pdf, PHPresume.pdf, portfolio.pdf, Resume.pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Buffer_Resume.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, Yogitadev.pdf, YogitaMittal-FullStack.pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla.pdf"
+    },
+    {
+      "name": "Next.js Dynamic Category & Brand Pages (Lakshmi Iron Company)",
+      "description": "Designed and developed a full-stack freelance project using Next.js. Built a dynamic category & brand system with subcategories displayed as large, visually appealing image cards. Implemented multi-brand product mapping using brand_url, enabling one product to be listed under multiple brand pages. Created quick-view product modals with clean UI and integrated a WhatsApp-powered \u201cGet Quote\u201d CTA for instant customer engagement. Developed a Supabase-powered review carousel, supporting responsive layouts, profile photos, and star ratings. Focused on mobile-first performance and modern UI design, delivering a seamless and intuitive user experience. Ensured scalability and maintainability by building reusable components and clean code architecture.",
+      "tech_stack": [
+        "Next.js",
+        "Supabase",
+        "React",
+        "Tailwind CSS"
+      ],
+      "role": "Sole Developer / Architect",
+      "citation": "portfolio_website, AIintegrationEngg.pdf, SeniorWebDev.pdf, seniorWebDeveloper.pdf, Resume.pdf, Yogita (3).pdf, Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, YOGITAMITTAL-AIEngineer_compressed.pdf, Yogita_Mittal_.pdf, Yogita_Mittal_AI_ML_Engineer.pdf, Yogita_Mittal_Buffer_Resume.pdf, Yogita_Mittal_Resume.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, Yogitadev.pdf, YogitaMittal-FullStack.pdf, YogitaML (1).pdf, YogitaSeniorDev.pdf, YogitaSrDev (4).pdf, YogitaSrFrontend.pdf, yogitaSingla.pdf"
+    },
+    {
+      "name": "Spidering & Ranking Project / Automated Ranking Intelligence",
+      "description": "Developed a web spider and search ranking system using Python. Wrote Python scripts to crawl, parse, and index web pages into a structured database. Implemented an algorithm to rank pages by link analysis, mimicking the fundamentals of search engines. Automated data storage and retrieval using SQLite.",
+      "tech_stack": [
+        "Python",
+        "Web Scraping",
+        "SQLite",
+        "Data Processing"
+      ],
+      "role": "Developer / Architect",
+      "citation": "portfolio_website, portfolio.pdf, Yogita_Mittal_Resume.pdf"
+    },
+    {
+      "name": "Post-Partum Health-Band (AI/ML Research)",
+      "description": "Engineering a predictive ML model focused on post-partum health metrics and wearable data analysis.",
+      "tech_stack": [
+        "Python",
+        "Data Science",
+        "Predictive Modeling"
+      ],
+      "role": "Researcher / Engineer",
+      "citation": "portfolio_website"
+    },
+    {
+      "name": "Deep Learning Practice (TensorFlow)",
+      "description": "Implemented image classification using CIFAR datasets with neural networks. Built NLP models for sentiment analysis and review classification using TensorFlow. Performed data preprocessing, feature engineering, model training, and evaluation. Worked with Jupyter/Colab notebooks for experimentation and iteration.",
+      "tech_stack": [
+        "TensorFlow",
+        "Neural Networks",
+        "NLP",
+        "Image Classification",
+        "Data Preprocessing",
+        "Jupyter/Colab"
+      ],
+      "role": "Developer",
+      "citation": "FullstackML.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf"
+    },
+    {
+      "name": "Traditional ML \u2013 Classification Models",
+      "description": "Built classification models using Scikit-learn for structured datasets. Implemented end-to-end ML workflow including EDA, feature selection, and evaluation. Explored model performance tuning and validation techniques.",
+      "tech_stack": [
+        "Scikit-learn",
+        "Classification",
+        "EDA",
+        "Feature Selection",
+        "Model Evaluation"
+      ],
+      "role": "Developer",
+      "citation": "FullstackML.pdf, SrProdEngg.pdf, Yogita (1).pdf, Yogita (3).pdf, YogitaML.pdf, YogitaPHP-JS.pdf, YogitaSeniorDev.pdf, YogitaSrDev (1).pdf, YogitaSrDev (2).pdf, YogitaSrDev (3).pdf, YogitaSrDev (4).pdf, YogitaSrDev (5).pdf, YogitaSrDev.pdf, YogitaSrFrontend.pdf, yogitaSingla (1).pdf, yogitaSingla (2).pdf, yogitaSingla.pdf"
+    },
+    {
+      "name": "MomDigital Platform (Ongoing Project)",
+      "description": "Currently developing a modern full-stack platform using Next.js, Node.js, and scalable frontend/backend architecture. Working on modular systems, API integrations, dashboard workflows, and AI-assisted automation concepts.",
+      "tech_stack": [
+        "Next.js",
+        "Node.js",
+        "NestJS",
+        "TypeScript",
+        "PostgreSQL",
+        "API Integrations",
+        "AI-assisted Automation"
+      ],
+      "role": "Developer",
+      "citation": "Yogita (3).pdf, yogitaSingla.pdf, YogitaSrDev (4).pdf"
+    },
+    {
+      "name": "Breck's Gifts Website Redesign",
+      "description": "Executed a complete front-end and back-end redesign of the site. Developed custom components, templates, and personalized gift journeys. Enhanced responsiveness and performance across all devices. Led the full frontend and backend implementation using Smarty PHP, jQuery, JSON, and CommerceV3, ensuring seamless user experience.",
+      "tech_stack": [
+        "Smarty PHP",
+        "jQuery",
+        "JSON",
+        "HTML",
+        "CSS",
+        "CommerceV3",
+        "Shopify"
+      ],
+      "role": "Software Developer / Lead Developer",
+      "citation": "portfolio.pdf, resume (2).pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YogitaCV.pdf, YogitaCV2025.pdf, YogitaMarketingResume.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Mittal_Resume_Updated.pdf, Yogita_Revamped_Resume.pdf, Yogita_Singla.pdf, Yogita_Singla_Resume.pdf, Yogita_Singla_Resume_Updated.pdf, Yogita_Singla_Updated_Resume.pdf, YogitaWorkSamples.pdf"
+    },
+    {
+      "name": "Spring Hill Nursery - Promotional Pop-ups & PDPs",
+      "description": "Designed high-converting promotional pop-ups integrated directly with marketing funnels. Developed and maintained complex product detail pages, bridging backend logic with UI. Managed automated event-driven tracking for seasonal sales and customer behavior analytics.",
+      "tech_stack": [
+        "PHP",
+        "Smarty PHP",
+        "jQuery",
+        "Vanilla JS",
+        "HTML",
+        "CSS"
+      ],
+      "role": "Full-Stack Architecture / Web Developer",
+      "citation": "portfolio_website, portfolio.pdf, YogitaWorkSamples.pdf, resume (2).pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Singla_Updated_Resume.pdf"
+    },
+    {
+      "name": "Gurney's - Dynamic Pages & Email Validation",
+      "description": "Developed dynamic, seasonal landing pages and specialized 'Chef-Focused' content modules. Resolved complex legacy JavaScript bugs and layout inconsistencies across major browsers. Integrated BriteVerify API for real-time email validation to ensure lead data accuracy.",
+      "tech_stack": [
+        "PHP",
+        "Smarty PHP",
+        "jQuery",
+        "Vanilla JS",
+        "JavaScript",
+        "BriteVerify API"
+      ],
+      "role": "Full-Stack Architecture / Software Developer",
+      "citation": "portfolio_website, portfolio.pdf, YogitaWorkSamples.pdf, resume (2).pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Singla_Updated_Resume.pdf"
+    },
+    {
+      "name": "DutchBulbs - Abandoned Cart Email Flow",
+      "description": "Architected and launched an automated 'Abandoned Cart' email flow to recover lost revenue. Ensured event-driven tracking compatibility for advanced remarketing strategies. Optimized legacy PHP checkout flows to ensure stability during high-traffic email blasts.",
+      "tech_stack": [
+        "PHP",
+        "Smarty PHP",
+        "jQuery",
+        "Vanilla JS",
+        "Email Automation"
+      ],
+      "role": "Full-Stack Architecture / Software Developer",
+      "citation": "portfolio_website, portfolio.pdf"
+    },
+    {
+      "name": "Bits & Pieces Canada - Cart & Promotional Pages",
+      "description": "Fixed mission-critical cart calculation and checkout errors to maintain transaction integrity. Engineered multiple seasonal and promotional landing pages for the Canadian market. Customized CommerceV3 backend data to support regional targeting and tax rules.",
+      "tech_stack": [
+        "PHP",
+        "Smarty PHP",
+        "jQuery",
+        "Vanilla JS",
+        "CommerceV3"
+      ],
+      "role": "Full-Stack Architecture / Software Developer",
+      "citation": "portfolio_website, portfolio.pdf"
+    },
+    {
+      "name": "Breck's (US/Global) - Dynamic Discounts & Targeting",
+      "description": "Engineered sophisticated keycode-based logic for dynamic discounts and promotions. Handled complex backend data manipulation for precise regional customer targeting. Maintained core legacy codebases while ensuring zero-downtime for global shoppers.",
+      "tech_stack": [
+        "PHP",
+        "Smarty PHP",
+        "jQuery",
+        "Vanilla JS"
+      ],
+      "role": "Full-Stack Architecture / Software Developer",
+      "citation": "portfolio_website, portfolio.pdf"
+    },
+    {
+      "name": "Spilsbury - Targeted Landing Pages & Accessibility",
+      "description": "Delivered high-performance, targeted landing pages and custom UX features. Resolved persistent cart errors affecting mobile and desktop checkout sessions. Implemented WCAG-compliant interface elements to improve site accessibility.",
+      "tech_stack": [
+        "PHP",
+        "Smarty PHP",
+        "jQuery",
+        "Vanilla JS",
+        "WCAG Compliance"
+      ],
+      "role": "Full-Stack Architecture / Software Developer",
+      "citation": "portfolio_website, portfolio.pdf, YogitaWorkSamples.pdf, resume (2).pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Singla_Updated_Resume.pdf"
+    },
+    {
+      "name": "Breck's Bulbs Canada - Promotional Landing Pages & Mobile-First",
+      "description": "Built and maintained high-converting promotional landing pages for international audiences. Implemented mobile-first performance improvements to boost Core Web Vitals. Managed cross-brand data synchronization for unified catalog management.",
+      "tech_stack": [
+        "PHP",
+        "Smarty PHP",
+        "jQuery",
+        "Vanilla JS",
+        "Core Web Vitals"
+      ],
+      "role": "Full-Stack Architecture / Web Developer",
+      "citation": "portfolio_website, portfolio.pdf"
+    },
+    {
+      "name": "Weeks Roses - High-Precision Maps & Data Visualization",
+      "description": "Developed high-precision maps using advanced PHP/SQL for massive databases. Implemented interactive mapping and geographic data visualization for wholesale distribution. Customized 'Quick View' category overlays and dynamic data-layer event tracking.",
+      "tech_stack": [
+        "PHP",
+        "SQL",
+        "jQuery",
+        "Vanilla JS",
+        "Data Visualization"
+      ],
+      "role": "Full-Stack Architecture / Software Developer",
+      "citation": "portfolio_website, portfolio.pdf, YogitaWorkSamples.pdf, resume (2).pdf, ResumeYogitaMittal (1).pdf, ResumeYogitaMittal.pdf, YogitaResume.pdf, YogitaResume2025.pdf, Yogita_Singla_Updated_Resume.pdf"
+    },
+    {
+      "name": "Gardens Alive! Ecosystem - Commerce V3 Engine Development",
+      "description": "Core developer for 'Commerce V3' engine using Vanilla PHP, Smarty, and jQuery. Architected UTM-based landing page personalization and automated abandoned cart recovery. Built accessible video-popups with intelligent autoplay/mute logic for marketing campaigns.",
+      "tech_stack": [
+        "Vanilla PHP",
+        "Smarty PHP",
+        "jQuery",
+        "Vanilla JS",
+        "CommerceV3",
+        "UTM Tracking"
+      ],
+      "role": "Full-Stack Architecture / Core Developer",
+      "citation": "portfolio_website, portfolio.pdf"
+    },
+    {
+      "name": "Paragon & Added Touch - High-End Apparel Catalogs",
+      "description": "Engineered high-end apparel catalogs with complex 'Tethered Model' image logic. Developed multi-address shipping systems with dynamic discount/tax calculations. Optimized front-end performance for heavy image/video assets across 20+ brands.",
+      "tech_stack": [
+        "PHP",
+        "Smarty PHP",
+        "jQuery",
+        "Vanilla JS"
+      ],
+      "role": "Full-Stack Architecture",
+      "citation": "portfolio_website, portfolio.pdf"
+    },
+    {
+      "name": "Titanic Survival Prediction \u2013 ML Project",
+      "description": "Performed exploratory data analysis and data cleaning on passenger datasets. Applied grouped median/mode strategies to handle missing values. Engineered predictive features and trained classification models. Implemented Random Forest and other models using Python ML libraries. Evaluated models using accuracy and classification metrics.",
+      "tech_stack": [
+        "Python",
+        "Pandas",
+        "NumPy",
+        "Scikit-learn",
+        "Random Forest",
+        "Classification",
+        "EDA"
+      ],
+      "role": "ML Developer",
+      "citation": "Yogita_Mittal_AI_ML_Engineer.pdf"
+    },
+    {
+      "name": "Red Rock Taxes \u2013 Website Optimization, Domain Migration & Integrations",
+      "description": "Implemented website updates and service page improvements to support client workflows. Managed domain transfer and DNS configuration updates during platform transition. Updated DNS records and configured redirect routing after domain migration to maintain traffic continuity and preserve existing links. Implemented email marketing integration using Mailchimp, including hard-coded form integration and subscriber capture workflows. Assisted with website performance improvements and structured navigation updates. Supported operational workflows including service forms and client interaction flows. Implemented custom transactional email workflows using SendGrid, integrating backend form handling with programmatic email delivery. Developed server-side email triggers and validation logic for client inquiry and service request flows. Integrated Google reCAPTCHA to secure public forms and prevent automated spam submissions.",
+      "tech_stack": [
+        "Mailchimp",
+        "SendGrid",
+        "Google reCAPTCHA",
+        "DNS Management",
+        "SEO",
+        "PHP",
+        "JavaScript",
+        "HTML",
+        "CSS"
+      ],
+      "role": "Full-Stack Developer / Technical Consultant",
+      "citation": "Yogita Mittal (1).pdf, Yogita Mittal (2).pdf, Yogita Mittal.pdf, Yogita_Mittal_Senior_FullStack_React_Next_TypeScript.pdf, Yogita_Mittal_Senior_Frontend_Resume.pdf, YogitaSrFrontend.pdf"
+    }
+  ],
+  "custom_responses": {}
+}

@@ -1,0 +1,141 @@
+import os
+import json
+import re
+from dotenv import load_dotenv
+from langchain_google_genai import ChatGoogleGenerativeAI
+
+load_dotenv()
+
+TAILORED_RESUMES_DIR = os.path.join(os.path.dirname(__file__), "tailored_resumes")
+llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.1)
+
+def generate_tailored_resume(job: dict, profile: dict) -> tuple[str, str]:
+    """
+    Generates a tailored LaTeX resume and a companion Alignment Audit Markdown report
+    specifically matching the job listing against the candidate's living profile.
+    
+    Adheres strictly to the rules:
+    1. Never fabricate skills, projects, or experiences.
+    2. Cite exact resume/portfolio sources as LaTeX comments.
+    """
+    if not os.path.exists(TAILORED_RESUMES_DIR):
+        os.makedirs(TAILORED_RESUMES_DIR)
+        
+    company_clean = re.sub(r'\W+', '', job.get('company', 'Company')).capitalize()
+    title_clean = re.sub(r'\W+', '', job.get('title', 'Role')).capitalize()
+    
+    tex_path = os.path.join(TAILORED_RESUMES_DIR, f"{company_clean}_{title_clean}_Resume.tex")
+    md_path = os.path.join(TAILORED_RESUMES_DIR, f"{company_clean}_{title_clean}_Alignment.md")
+    
+    profile_str = json.dumps(profile, indent=2)
+    
+    prompt = f"""
+    You are the Resume Tailoring Core of JobCraft AI.
+    Your objective is to generate an elite, tailored LaTeX resume for the candidate (Yogita Singla) specifically optimized to match the target position at {job.get('company')}.
+    
+    Position: {job.get('title')}
+    Job Description:
+    {job.get('description', '')}
+    
+    Candidate Living Profile Context:
+    {profile_str}
+    
+    CRITICAL BEHAVIORAL RULES:
+    1. NEVER fabricate skills, projects, metrics, or experiences. Use only what is explicitly in the candidate profile.
+    2. EVERY output detail must be cited. For the LaTeX code, you MUST insert comments like '% Citation: [Measured Inc. - Portfolio Website]' or '% Citation: [Red Rock - base_resume]' right above the items/bullets.
+    3. The LaTeX resume must be formatted in a single-column, linear structure optimal for ATS parsing and human readability. Use standard packages (geometry, hyperref, titlesec, enumitem).
+    4. You must also produce a detailed Alignment Audit in Markdown format that explains the tailoring decisions, matched skills, and citations.
+    
+    Output Format:
+    You must return a structure with two distinct blocks separated by the delimiter '====================ALIGNMENT_AUDIT_SPLIT===================='.
+    
+    Block 1: Raw LaTeX resume code. Start immediately with \\documentclass. Do not include markdown code ticks (```latex).
+    Block 2: Companion Alignment Audit in Markdown. Start immediately with # Alignment Audit.
+    
+    LaTeX Template Structure to adhere to:
+    ```latex
+    \\documentclass[10pt,letterpaper]{{article}}
+    \\usepackage[utf8]{{inputenc}}
+    \\usepackage[margin=0.75in]{{geometry}}
+    \\usepackage{{hyperref}}
+    \\usepackage{{titlesec}}
+    \\usepackage{{enumitem}}
+    
+    \\pagestyle{{empty}}
+    
+    % Section formatting
+    \\titleformat{{\\section}}{{\\large\\bfseries\\uppercase}}{{}}{{0em}}{{}}[\\titlerule]
+    \\titlespacing{{\\section}}{{0pt}}{{10pt}}{{5pt}}
+    
+    \\begin{{document}}
+    
+    \\begin{{center}}
+        {{\\LARGE \\textbf{{Yogita Singla}}}} \\\\
+        \\vspace{{2pt}}
+        yogitamittal.tech@gmail.com \\ | \\ \\href{{https://portfolio-three-sigma-mp0vvhcq3h.vercel.app/}}{{Portfolio}} \\ | \\ Remote / India
+    \\end{{center}}
+    
+    \\section{{Professional Summary}}
+    [Tailored summary matching core objectives of the role using only candidate experience metrics]
+    
+    \\section{{Skills}}
+    [List of languages, frameworks, tools, databases that overlap with the job description and exist in the candidate profile]
+    
+    \\section{{Experience}}
+    [For each experience, write tailored bullet points focusing on relevant achievements. Add citation comments above each company/bullet block]
+    
+    \\section{{Projects & Labs}}
+    [Tailor the list of projects to highlight matching stacks and problem-solving, with citation comments]
+    
+    \\end{{document}}
+    ```
+    """
+    
+    print(f"🚀 Tailoring resume and generating alignment audit for: {job.get('company')} - {job.get('title')}...")
+    
+    try:
+        response = llm.invoke([prompt])
+        content = response.content.strip()
+        
+        parts = content.split("====================ALIGNMENT_AUDIT_SPLIT====================")
+        
+        latex_code = parts[0].strip()
+        alignment_audit = parts[1].strip() if len(parts) > 1 else "# Alignment Audit\nResume generated successfully."
+        
+        # Clean up any residual markdown wrappers in latex
+        if latex_code.startswith("```"):
+            latex_code = re.sub(r'^```latex\n', '', latex_code)
+            latex_code = re.sub(r'\n```$', '', latex_code)
+            
+        if alignment_audit.startswith("```"):
+            alignment_audit = re.sub(r'^```markdown\n', '', alignment_audit)
+            alignment_audit = re.sub(r'\n```$', '', alignment_audit)
+            
+        # Save LaTeX file
+        with open(tex_path, 'w', encoding='utf-8') as f:
+            f.write(latex_code)
+            
+        # Save Alignment Audit file
+        with open(md_path, 'w', encoding='utf-8') as f:
+            f.write(alignment_audit)
+            
+        print(f"✅ Tailored LaTeX resume written to: {tex_path}")
+        print(f"📋 Alignment Audit Markdown written to: {md_path}")
+        
+        return tex_path, md_path
+        
+    except Exception as e:
+        print(f"❌ Resume generation failed: {e}")
+        fallback_latex = f"""% Fallback resume due to error
+\\documentclass[10pt]{{article}}
+\\begin{{document}}
+Yogita Singla - {job.get('company')} Tailored Resume
+\\end{{document}}"""
+        fallback_md = f"# Error Generating Alignment Audit\n{str(e)}"
+        
+        with open(tex_path, 'w') as f:
+            f.write(fallback_latex)
+        with open(md_path, 'w') as f:
+            f.write(fallback_md)
+            
+        return tex_path, md_path
