@@ -1,0 +1,6 @@
+requests
+beautifulsoup4
+pypdf
+langchain-google-genai
+python-dotenv
+playwright
