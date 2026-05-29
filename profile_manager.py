@@ -8,15 +8,13 @@ except AttributeError:
     pass
 from pypdf import PdfReader
 from dotenv import load_dotenv
-from langchain_google_genai import ChatGoogleGenerativeAI
+from gemini_client import llm
 from scraper import scrape_portfolio
 
 load_dotenv()
 
 PROFILE_PATH = os.path.join(os.path.dirname(__file__), "candidate_profile.json")
 BASE_RESUMES_DIR = os.path.join(os.path.dirname(__file__), "base_resumes")
-
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.1)
 
 def extract_text_from_pdf(pdf_path: str) -> str:
     """Extracts plain text from a PDF resume file."""

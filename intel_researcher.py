@@ -4,12 +4,9 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
-from langchain_google_genai import ChatGoogleGenerativeAI
-
-load_dotenv()
+from gemini_client import llm
 
 INTEL_DIR = os.path.join(os.path.dirname(__file__), "company_briefs")
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.1)
 
 def web_search_hiring_data(company: str, title: str) -> str:
     """

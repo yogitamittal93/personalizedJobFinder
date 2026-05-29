@@ -1,12 +1,7 @@
 import os
 import json
 from dotenv import load_dotenv
-from langchain_google_genai import ChatGoogleGenerativeAI
-
-load_dotenv()
-
-# We will reuse the gemini model loaded with the correct environment variables
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.1)
+from gemini_client import llm
 
 def evaluate_and_prioritize(job: dict, profile: dict) -> dict:
     """
