@@ -13,10 +13,50 @@ def scrape_portfolio(url: str) -> str:
     except Exception as e:
         return f"Portfolio scraping failed: {str(e)}"
 
+def is_location_eligible(location: str, company: str) -> bool:
+    """
+    Checks if a job location is suitable for a candidate remote in India.
+    Filters out strictly local/on-site roles in other countries (e.g. US-only, UK-only).
+    """
+    loc = str(location).lower()
+    comp = str(company).lower()
+    
+    # 1. Indian companies (always eligible for remote or local in India)
+    indian_companies = [
+        "razorpay", "freshworks", "browserstack", "chargebee", 
+        "cred", "zerodha", "groww", "hasura"
+    ]
+    if comp in indian_companies:
+        return True
+        
+    # 2. Explicitly restricted locations (not suitable for India)
+    # Filter out US-only, Europe-only, Americas-only, EMEA-only, LATAM-only, etc.
+    restricted_keywords = [
+        "us only", "usa only", "united states", "canada", "north america", "europe only", 
+        "emea", "latam", "americas only", "strictly us", "strictly usa", "germany strictly",
+        "uk only", "united kingdom", "london", "berlin", "munich", "san francisco", "new york",
+        "boston", "austin", "seattle", "chicago", "los angeles", "denver"
+    ]
+    if any(rk in loc for rk in restricted_keywords):
+        # Unless it also explicitly mentions "India" or "Worldwide" or "Global"
+        if not ("india" in loc or "worldwide" in loc or "global" in loc or "anywhere" in loc):
+            return False
+            
+    # 3. Explicitly suitable locations
+    suitable_keywords = [
+        "india", "remote", "worldwide", "anywhere", "global", "apac", "asia", "bengaluru",
+        "bangalore", "delhi", "mumbai", "pune", "hyderabad", "chennai", "noida", "gurgaon"
+    ]
+    if any(sk in loc for sk in suitable_keywords):
+        return True
+        
+    # Default to True to avoid false negatives on blank/unstated locations for global remote companies
+    return True
+
 def check_bulk_ats_boards() -> list[dict]:
     """
     Queries public ATS API channels for all target companies simultaneously.
-    Maps company names to their exact system subdomains.
+    Maps company names to their exact system subdomains, filtering for India/Global Remote eligibility.
     """
     found_jobs = []
     
@@ -42,7 +82,7 @@ def check_bulk_ats_boards() -> list[dict]:
     ashby_companies = [
         "linear", "railway", "clerk", "resend", "dub"
     ]
- 
+  
     print(f"📡 Querying {len(greenhouse_companies)} Greenhouse job boards...")
     for company in greenhouse_companies:
         try:
@@ -51,14 +91,17 @@ def check_bulk_ats_boards() -> list[dict]:
             if res.status_code == 200:
                 jobs = res.json().get("jobs", [])
                 for j in jobs:
-                    found_jobs.append({
-                        "company": company.capitalize(),
-                        "title": j["title"],
-                        "url": j["absolute_url"],
-                        "description": j.get("content", j["title"])
-                    })
+                    loc_name = j.get("location", {}).get("name", "Remote")
+                    if is_location_eligible(loc_name, company):
+                        found_jobs.append({
+                            "company": company.capitalize(),
+                            "title": j["title"],
+                            "url": j["absolute_url"],
+                            "description": j.get("content", j["title"]),
+                            "location": loc_name
+                        })
         except Exception:
-            continue # Silently bypass rate limits or offline profiles
+            continue
 
     print(f"📡 Querying {len(lever_companies)} Lever job boards...")
     for company in lever_companies:
@@ -67,12 +110,15 @@ def check_bulk_ats_boards() -> list[dict]:
             res = requests.get(url, timeout=5)
             if res.status_code == 200:
                 for j in res.json():
-                    found_jobs.append({
-                        "company": company.capitalize(),
-                        "title": j["text"],
-                        "url": j["hostedUrl"],
-                        "description": j.get("description", "")
-                    })
+                    loc_name = j.get("categories", {}).get("location", "Remote")
+                    if is_location_eligible(loc_name, company):
+                        found_jobs.append({
+                            "company": company.capitalize(),
+                            "title": j["text"],
+                            "url": j["hostedUrl"],
+                            "description": j.get("description", ""),
+                            "location": loc_name
+                        })
         except Exception:
             continue
 
@@ -84,19 +130,22 @@ def check_bulk_ats_boards() -> list[dict]:
             if res.status_code == 200:
                 jobs = res.json().get("results", [])
                 for j in jobs:
-                    found_jobs.append({
-                        "company": company.capitalize(),
-                        "title": j["title"],
-                        "url": j["jobUrl"],
-                        "description": j.get("descriptionHtml", "")
-                    })
+                    loc_name = j.get("locationName", "Remote")
+                    if is_location_eligible(loc_name, company):
+                        found_jobs.append({
+                            "company": company.capitalize(),
+                            "title": j["title"],
+                            "url": j["jobUrl"],
+                            "description": j.get("descriptionHtml", ""),
+                            "location": loc_name
+                        })
         except Exception:
             continue
 
     return found_jobs
 
 def fetch_us_germany_startups() -> list[dict]:
-    """Fetches high-paying US/Europe startups explicitly hiring globally."""
+    """Fetches high-paying US/Europe startups explicitly hiring globally or in India."""
     startup_jobs = []
     remotive_url = "https://remotive.com/api/remote-jobs?category=software-dev"
     
@@ -106,14 +155,22 @@ def fetch_us_germany_startups() -> list[dict]:
             all_jobs = res.json().get("jobs", [])
             for j in all_jobs:
                 geo = j.get("candidate_required_location", "").lower()
-                is_worldwide = "worldwide" in geo or "anywhere" in geo or "global" in geo
+                is_eligible = (
+                    "worldwide" in geo or 
+                    "anywhere" in geo or 
+                    "global" in geo or 
+                    "india" in geo or 
+                    "apac" in geo or 
+                    "asia" in geo
+                )
                 
-                if is_worldwide:
+                if is_eligible:
                     startup_jobs.append({
                         "company": j.get("company_name", "Global Startup"),
                         "title": j.get("title", ""),
                         "url": j.get("url", ""),
-                        "description": j.get("description", "")
+                        "description": j.get("description", ""),
+                        "location": j.get("candidate_required_location", "Worldwide")
                     })
     except Exception as e:
         print(f"Error checking startup API: {e}")

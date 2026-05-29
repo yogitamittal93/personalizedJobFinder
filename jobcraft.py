@@ -162,6 +162,12 @@ def discovery_scout_mode():
         profile = json.load(f)
         
     listings = scout_hidden_gems()
+    for job in listings:
+        loc = job.get('location', 'Remote')
+        desc = job.get('description', '')
+        if "Location:" not in desc:
+            job['description'] = f"Location: {loc}\n\n{desc}"
+            
     print(f"🔍 Crawl complete. Evaluating {len(listings)} listings...")
     
     conn = sqlite3.connect('job_tracker.db')
@@ -579,7 +585,12 @@ def cron_scraping_mode():
         
     init_db()
     listings = scout_hidden_gems()
-    
+    for job in listings:
+        loc = job.get('location', 'Remote')
+        desc = job.get('description', '')
+        if "Location:" not in desc:
+            job['description'] = f"Location: {loc}\n\n{desc}"
+            
     conn = sqlite3.connect('job_tracker.db')
     cursor = conn.cursor()
     
