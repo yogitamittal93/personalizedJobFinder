@@ -1,3 +1,4 @@
+import re
 import requests
 import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
@@ -60,27 +61,51 @@ def check_bulk_ats_boards() -> list[dict]:
     """
     found_jobs = []
     
-    # 1. GREENHOUSE TARGETS
+    # 1. GREENHOUSE TARGETS — expanded company list
     greenhouse_companies = [
-        "duckduckgo", "vercel", "postman", "hashicorp", "hubspot", "figma", "stripe", 
-        "airbnb", "spotify", "coinbase", "mongodb", "pinterest", "confluent", "affirm", 
-        "twilio", "reddit", "crowdstrike", "ramp", "plaid", "brex", "deel", "mercury", 
-        "airtable", "linear", "netlify", "supabase", "planetscale", "neon", "huggingface", 
-        "anthropic", "cohere", "scaleai", "adept", "runway", "stabilityai", "getyourguide", 
-        "deliveryhero", "zalando", "soundcloud", "booking", "unity3d", "celonis", "personio", 
-        "razorpay", "freshworks", "browserstack", "chargebee", "calendly", "loom", "retool"
+        # Developer tools & infrastructure
+        "vercel", "netlify", "supabase", "planetscale", "neon", "railway", "render",
+        "duckduckgo", "postman", "hashicorp", "mongodb", "confluent", "cockroachlabs",
+        # Design & productivity
+        "figma", "airtable", "notion", "linear", "loom", "coda", "miro",
+        # Fintech & payments
+        "stripe", "brex", "ramp", "plaid", "mercury", "deel", "rippling", "patreon",
+        "affirm", "coinbase", "kraken", "robinhood",
+        # Marketing & CRM
+        "hubspot", "klaviyo", "attentive", "iterable", "amplitude", "mixpanel",
+        # E-commerce
+        "shopify", "klaviyo", "recharge", "gorgias", "yotpo", "nacelle",
+        # AI & ML
+        "huggingface", "anthropic", "cohere", "scaleai", "adept", "runway",
+        "stabilityai", "mistral", "perplexity", "together",
+        # Media & social
+        "reddit", "pinterest", "soundcloud", "discord", "twitch",
+        # Cloud & DevOps
+        "crowdstrike", "datadog", "newrelic", "grafana", "sentry",
+        # Global remote-first
+        "zapier", "buffer", "doist", "toggl", "hotjar", "papercup",
+        # Indian & APAC
+        "razorpay", "freshworks", "browserstack", "chargebee", "clevertap",
+        "postman", "hasura", "zepto", "groww", "cred",
+        # General remote
+        "calendly", "retool", "webflow", "framer", "ghost", "gitbook",
+        "twilio", "sendgrid", "segment", "contentful", "sanity"
     ]
     
-    # 2. LEVER TARGETS
+    # 2. LEVER TARGETS — expanded company list
     lever_companies = [
-        "buffer", "zapier", "ghost", "atlassian", "gitbook", "notion", "slack", "close", 
-        "digitalocean", "miro", "canva", "coda", "render", "railway", "turso", "character", 
-        "bunq", "mollie", "cred", "zerodha", "groww", "hasura", "andela", "grist"
+        "buffer", "zapier", "ghost", "atlassian", "gitbook", "close",
+        "digitalocean", "canva", "turso", "character", "bunq", "mollie",
+        "zerodha", "andela", "grist", "doist", "hotjar", "typeform",
+        "intercom", "drift", "front", "liveblocks", "stytch", "clerk",
+        "resend", "dub", "novu", "trigger", "inngest", "cal",
+        "formbricks", "midday", "papermark", "documenso"
     ]
     
-    # 3. ASHBY TARGETS
+    # 3. ASHBY TARGETS — expanded list
     ashby_companies = [
-        "linear", "railway", "clerk", "resend", "dub"
+        "linear", "railway", "clerk", "resend", "dub", "liveblocks",
+        "novu", "trigger", "cal", "mintlify", "unkey", "openstatus"
     ]
   
     print(f"📡 Querying {len(greenhouse_companies)} Greenhouse job boards...")
@@ -145,53 +170,113 @@ def check_bulk_ats_boards() -> list[dict]:
     return found_jobs
 
 def fetch_us_germany_startups() -> list[dict]:
-    """Fetches high-paying US/Europe startups explicitly hiring globally or in India."""
+    """Fetches high-paying global-remote startup listings from Remotive API."""
     startup_jobs = []
-    remotive_url = "https://remotive.com/api/remote-jobs?category=software-dev"
     
-    try:
-        res = requests.get(remotive_url, timeout=10)
-        if res.status_code == 200:
-            all_jobs = res.json().get("jobs", [])
-            for j in all_jobs:
-                geo = j.get("candidate_required_location", "").lower()
-                is_eligible = (
-                    "worldwide" in geo or 
-                    "anywhere" in geo or 
-                    "global" in geo or 
-                    "india" in geo or 
-                    "apac" in geo or 
-                    "asia" in geo
-                )
-                
-                if is_eligible:
-                    startup_jobs.append({
-                        "company": j.get("company_name", "Global Startup"),
-                        "title": j.get("title", ""),
-                        "url": j.get("url", ""),
-                        "description": j.get("description", ""),
-                        "location": j.get("candidate_required_location", "Worldwide")
-                    })
-    except Exception as e:
-        print(f"Error checking startup API: {e}")
-        
+    # Multiple categories to widen the net
+    categories = ["software-dev", "frontend", "backend", "fullstack", "devops-sysadmin"]
+    
+    for category in categories:
+        try:
+            remotive_url = f"https://remotive.com/api/remote-jobs?category={category}&limit=50"
+            res = requests.get(remotive_url, timeout=10)
+            if res.status_code == 200:
+                all_jobs = res.json().get("jobs", [])
+                for j in all_jobs:
+                    geo = j.get("candidate_required_location", "").lower()
+                    is_eligible = (
+                        not geo or  # No location restriction = worldwide
+                        "worldwide" in geo or
+                        "anywhere" in geo or
+                        "global" in geo or
+                        "india" in geo or
+                        "apac" in geo or
+                        "asia" in geo
+                    )
+                    
+                    if is_eligible:
+                        startup_jobs.append({
+                            "company": j.get("company_name", "Global Startup"),
+                            "title": j.get("title", ""),
+                            "url": j.get("url", ""),
+                            "description": j.get("description", ""),
+                            "location": j.get("candidate_required_location", "Worldwide")
+                        })
+        except Exception as e:
+            print(f"Error checking Remotive ({category}): {e}")
+            
     return startup_jobs
 
+
+def fetch_weworkremotely_jobs() -> list[dict]:
+    """Fetches remote programming jobs from We Work Remotely RSS feed."""
+    wwr_jobs = []
+    feeds = [
+        "https://weworkremotely.com/categories/remote-programming-jobs.rss",
+        "https://weworkremotely.com/categories/remote-full-stack-programming-jobs.rss",
+        "https://weworkremotely.com/categories/remote-front-end-programming-jobs.rss",
+    ]
+    
+    for feed_url in feeds:
+        try:
+            res = requests.get(feed_url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+            if res.status_code == 200:
+                root = ET.fromstring(res.content)
+                for item in root.findall(".//item"):
+                    title_el = item.find("title")
+                    link_el = item.find("link")
+                    desc_el = item.find("description")
+                    
+                    if title_el is None or link_el is None:
+                        continue
+                    
+                    raw_title = title_el.text or ""
+                    # WWR titles are usually "Company: Role Title"
+                    if ":" in raw_title:
+                        parts = raw_title.split(":", 1)
+                        company = parts[0].strip()
+                        role = parts[1].strip()
+                    else:
+                        company = "Remote Company"
+                        role = raw_title.strip()
+                    
+                    url = link_el.text or ""
+                    description = ""
+                    if desc_el is not None and desc_el.text:
+                        # Strip CDATA HTML tags for plain text
+                        description = re.sub(r'<[^>]+>', ' ', desc_el.text)
+                        description = " ".join(description.split())
+                    
+                    if url and role:
+                        wwr_jobs.append({
+                            "company": company,
+                            "title": role,
+                            "url": url,
+                            "description": description,
+                            "location": "Worldwide Remote"
+                        })
+        except Exception as e:
+            print(f"Error fetching WWR feed {feed_url}: {e}")
+            
+    return wwr_jobs
+
 def scout_hidden_gems() -> list[dict]:
-    """Combines all target macro filters into a single pipeline output."""
+    """Combines all target macro filters into a single deduplicated pipeline output."""
     all_found = []
     
     all_found.extend(check_bulk_ats_boards())
     all_found.extend(fetch_us_germany_startups())
+    all_found.extend(fetch_weworkremotely_jobs())
     
-    # Deduplicate matching positions running across multiple aggregators
+    # Deduplicate by URL
     seen_urls = set()
     deduped_jobs = []
     for job in all_found:
-        if job["url"] not in seen_urls:
+        if job["url"] and job["url"] not in seen_urls:
             seen_urls.add(job["url"])
             deduped_jobs.append(job)
             
+    print(f"📦 Total unique listings sourced: {len(deduped_jobs)} across all channels.")
     return deduped_jobs
 
 def scrape_custom_job_page(url: str) -> dict:

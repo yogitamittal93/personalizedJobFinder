@@ -34,8 +34,8 @@ jobs:
 
     - name: Install LaTeX (for PDF compilation)
       run: |
-        sudo apt-get update
-        sudo apt-get install -y texlive-latex-recommended texlive-fonts-recommended
+        sudo apt-get update -q
+        sudo apt-get install -y texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra
 
     - name: Set environment variables
       run: |
@@ -56,10 +56,10 @@ jobs:
         python jobcraft.py --cron-summary
 
     - name: Commit and Push Database & Resumes
-      # Automatically sync database and tailored LaTeX resumes back to your repo
+      # Automatically sync database, tailored LaTeX/PDF resumes, and alignment audits back to repo
       run: |
         git config --global user.name "JobCraft AI Bot"
         git config --global user.email "jobcraft-agent@github.com"
         git add job_tracker.db candidate_profile.json tailored_resumes/ company_briefs/ || true
-        git commit -m "🤖 Auto-sync pipeline tracking: scouted roles & tailored resumes [skip ci]" || exit 0
+        git commit -m "🤖 Auto-sync: scouted roles, tailored resumes & PDFs, alignment audits [skip ci]" || exit 0
         git push

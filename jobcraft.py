@@ -75,7 +75,8 @@ def init_db():
         "compensation_signals": "TEXT DEFAULT 'Tier 2'",
         "citations": "TEXT DEFAULT '[]'",
         "unknown_fields": "TEXT DEFAULT '[]'",
-        "description": "TEXT DEFAULT ''"
+        "description": "TEXT DEFAULT ''",
+        "last_emailed": "TEXT DEFAULT NULL"  # Tracks last time this job appeared in email — enables rotation
     }
     
     for col_name, col_type in new_columns.items():
@@ -487,7 +488,7 @@ def trigger_apply_node():
     input("\nHit ENTER to return to menu...")
 
 def send_daily_newsletter_summary():
-    """Compiles pipeline statistics and outstanding preps; transmits as newsletter email."""
+    """Compiles pipeline stats and outstanding preps; transmits newsletter email with job rotation."""
     print(f"\n{BOLD}{YELLOW}📡 Generating pipeline sync newsletter summary...{RESET}")
     
     conn = sqlite3.connect('job_tracker.db')
@@ -498,17 +499,20 @@ def send_daily_newsletter_summary():
     total_count = cursor.fetchone()[0]
     cursor.execute("SELECT COUNT(*) FROM jobs WHERE status='Applied'")
     applied_count = cursor.fetchone()[0]
-    cursor.execute("SELECT COUNT(*) FROM jobs WHERE match_score >= 80 AND status='Scouted'")
-    high_priority_backlog = cursor.fetchall()
+    cursor.execute("SELECT COUNT(*) FROM jobs WHERE match_score >= 70 AND status='Scouted'")
+    high_priority_count = cursor.fetchone()[0]
     
-    # 2. Get top backlog roles
+    # 2. Rotate job batches — prefer never-emailed first, then least-recently-emailed
     cursor.execute("""
-        SELECT company, title, match_score, prep_plan, url, description FROM jobs 
-        WHERE match_score >= 80 AND status='Scouted' 
-        ORDER BY match_score DESC LIMIT 5
+        SELECT id, company, title, match_score, prep_plan, url, description FROM jobs 
+        WHERE match_score >= 70 AND status='Scouted' 
+        ORDER BY 
+            CASE WHEN last_emailed IS NULL THEN 0 ELSE 1 END ASC,
+            last_emailed ASC,
+            match_score DESC
+        LIMIT 5
     """)
     backlog_roles = cursor.fetchall()
-    conn.close()
     
     # Load candidate profile
     profile = {}
@@ -520,7 +524,7 @@ def send_daily_newsletter_summary():
             pass
 
     # Build email body
-    now_str = datetime.now().strftime("%A, %B %d, %Y")
+    now_str = datetime.now().strftime("%A, %B %d, %Y at %H:%M")
     body = f"🚀 JOBCRAFT AI — DAILY SYNC SYSTEM NEWSLETTER 🚀\n"
     body += f"Sync Date: {now_str}\n"
     body += f"============================================================\n\n"
@@ -528,41 +532,45 @@ def send_daily_newsletter_summary():
     body += f"📊 PIPELINE METRICS STATUS:\n"
     body += f"  • Total Scouted Positions : {total_count}\n"
     body += f"  • Applications Completed   : {applied_count}\n"
-    body += f"  • Hot Lead Backlog (>=80%) : {len(high_priority_backlog) if high_priority_backlog else 0}\n\n"
+    body += f"  • Active Backlog (>=70%)   : {high_priority_count}\n"
+    body += f"  • Roles in this digest     : {len(backlog_roles)} (rotated — fresh batch each email)\n\n"
     
+    emailed_job_ids = []
     if backlog_roles:
-        body += f"🔥 TOP HOT LEADS BACKLOG PLAYBOOK (NEEDS ACTION):\n"
+        body += f"🔥 TODAY'S HOT LEADS BATCH (NEEDS ACTION):\n"
         for idx, r in enumerate(backlog_roles):
-            company_clean = re.sub(r'\W+', '', r[0]).capitalize()
-            title_clean = re.sub(r'\W+', '', r[1]).capitalize()
+            job_id, company, title, match_score, prep_plan, url, description = r
+            company_clean = re.sub(r'\W+', '', company).capitalize()
+            title_clean = re.sub(r'\W+', '', title).capitalize()
             
-            # Automatically tailor resume if not already generated!
-            resume_path = os.path.join("tailored_resumes", f"{company_clean}_{title_clean}_Resume.tex")
-            if profile and not os.path.exists(resume_path):
-                print(f"📄 Background Action: Auto-tailoring LaTeX resume for {r[0]}...")
+            # Always regenerate resume fresh — never serve stale cached file
+            if profile:
+                print(f"📄 Auto-tailoring fresh resume for {company}...")
                 try:
-                    desc = r[5]
+                    desc = description
                     if not desc or len(desc.strip()) < 10:
-                        # Fallback: Scrape description on-the-fly!
-                        scraped = scrape_custom_job_page(r[4])
+                        scraped = scrape_custom_job_page(url)
                         desc = scraped.get('description', '')
-                    job_dict = {"company": r[0], "title": r[1], "url": r[4], "description": desc}
+                    job_dict = {"company": company, "title": title, "url": url, "description": desc}
                     generate_tailored_resume(job_dict, profile)
                 except Exception as e:
                     print(f"⚠️ Resume tailoring fail: {e}")
             
-            body += f"  {idx + 1}. {r[0]} — {r[1]} ({r[2]}% match score)\n"
-            body += f"     🔗 Direct Apply Link: {r[4]}\n"
-            body += f"     📄 Auto-Tailored LaTeX Resume: tailored_resumes/{company_clean}_{title_clean}_Resume.tex\n"
-            body += f"     📋 Alignment Audit Report: tailored_resumes/{company_clean}_{title_clean}_Alignment.md\n"
-            body += f"     🎯 Target Prep Playbook:\n{r[3]}\n\n"
+            body += f"  {idx + 1}. {company} — {title} ({match_score}% match)\n"
+            body += f"     🔗 Apply Link   : {url}\n"
+            body += f"     📄 LaTeX Resume : tailored_resumes/{company_clean}_{title_clean}_Resume.tex\n"
+            body += f"     📄 PDF Resume   : tailored_resumes/{company_clean}_{title_clean}_Resume.pdf\n"
+            body += f"     📋 Alignment MD : tailored_resumes/{company_clean}_{title_clean}_Alignment.md\n"
+            body += f"     🎯 Prep Playbook:\n{prep_plan}\n\n"
+            
+            emailed_job_ids.append(job_id)
             
     body += f"🧠 LIVING PROFILE INTELLIGENCE:\n"
     if os.path.exists("candidate_profile.json"):
         with open("candidate_profile.json", "r", encoding="utf-8") as f:
             prof = json.load(f)
-            body += f"  • Living profile synchronised successfully for {prof['personal_info']['full_name']}.\n"
-            body += f"  • Custom absorbed responses count: {len(prof.get('custom_responses', {}))}\n"
+            body += f"  • Profile synced for {prof['personal_info']['full_name']}.\n"
+            body += f"  • Learned responses: {len(prof.get('custom_responses', {}))}\n"
     else:
         body += "  • PROFILE UNSYNCED. Run Mode 1 immediately.\n"
         
@@ -570,7 +578,17 @@ def send_daily_newsletter_summary():
     body += f"This is an automated operational sync from your JobCraft AI Agent.\n"
     
     send_email_update(body)
-    print(f"{GREEN}📧 Daily dashboard sync newsletter emailed directly to {CANDIDATE_DATA['email']}!{RESET}")
+    print(f"{GREEN}📧 Daily dashboard sync newsletter emailed to {CANDIDATE_DATA['email']}!{RESET}")
+    
+    # Mark emailed jobs to power rotation on next send
+    if emailed_job_ids:
+        now_iso = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        for jid in emailed_job_ids:
+            cursor.execute("UPDATE jobs SET last_emailed=? WHERE id=?", (now_iso, jid))
+        conn.commit()
+        print(f"🔄 Rotation updated: {len(emailed_job_ids)} jobs marked. Next email will show a different batch.")
+    
+    conn.close()
     input("\nHit ENTER to return to menu...")
 
 def cron_scraping_mode():
@@ -655,7 +673,7 @@ def cron_scraping_mode():
     print(f"Cron finished. Added {new_jobs} new scored roles. Skipped {skipped_by_filter} unrelated roles. Quota pause status: {quota_pause}")
 
 def cron_summary_mode():
-    """Non-interactive daily summary newsletter compiler."""
+    """Non-interactive daily summary newsletter compiler with job rotation."""
     print("🤖 Cron trigger: compiling daily pipeline newsletter...")
     init_db()
     
@@ -666,13 +684,19 @@ def cron_summary_mode():
     cursor.execute("SELECT COUNT(*) FROM jobs WHERE status='Applied'")
     applied_count = cursor.fetchone()[0]
     
+    # --- JOB ROTATION FIX ---
+    # Prioritise jobs that have NEVER been emailed (last_emailed IS NULL),
+    # then rotate through least-recently-emailed to prevent the same 5 repeating.
     cursor.execute("""
-        SELECT company, title, match_score, prep_plan, url, description FROM jobs 
-        WHERE match_score >= 80 AND status='Scouted' 
-        ORDER BY match_score DESC LIMIT 5
+        SELECT id, company, title, match_score, prep_plan, url, description FROM jobs 
+        WHERE match_score >= 70 AND status='Scouted' 
+        ORDER BY 
+            CASE WHEN last_emailed IS NULL THEN 0 ELSE 1 END ASC,
+            last_emailed ASC,
+            match_score DESC
+        LIMIT 5
     """)
     backlog_roles = cursor.fetchall()
-    conn.close()
     
     # Load candidate profile
     profile = {}
@@ -683,47 +707,60 @@ def cron_summary_mode():
         except Exception:
             pass
             
-    now_str = datetime.now().strftime("%A, %B %d, %Y")
+    now_str = datetime.now().strftime("%A, %B %d, %Y at %H:%M UTC")
     body = f"🚀 JOBCRAFT AI — AUTOMATED OPERATIONS SUMMARY 🚀\n"
     body += f"Sync Date: {now_str}\n"
     body += f"============================================================\n\n"
     body += f"📊 PIPELINE METRICS STATUS:\n"
     body += f"  • Total Scouted Positions : {total_count}\n"
     body += f"  • Applications Completed   : {applied_count}\n"
-    body += f"  • Hot Lead Backlog (>=80%) : {len(backlog_roles)}\n\n"
+    body += f"  • Roles in this digest     : {len(backlog_roles)} (rotated — new batch each run)\n\n"
     
+    emailed_job_ids = []
     if backlog_roles:
-        body += f"🔥 TOP HOT LEADS BACKLOG PLAYBOOK (NEEDS ACTION):\n"
+        body += f"🔥 TODAY'S HOT LEADS BATCH (NEEDS ACTION):\n"
         for idx, r in enumerate(backlog_roles):
-            company_clean = re.sub(r'\W+', '', r[0]).capitalize()
-            title_clean = re.sub(r'\W+', '', r[1]).capitalize()
+            job_id, company, title, match_score, prep_plan, url, description = r
+            company_clean = re.sub(r'\W+', '', company).capitalize()
+            title_clean = re.sub(r'\W+', '', title).capitalize()
             
-            # Automatically tailor resume if not already generated!
-            resume_path = os.path.join("tailored_resumes", f"{company_clean}_{title_clean}_Resume.tex")
-            if profile and not os.path.exists(resume_path):
-                print(f"📄 Background Action: Auto-tailoring LaTeX resume for {r[0]}...")
+            # Always regenerate resume for freshness — never serve stale cached files
+            if profile:
+                print(f"📄 Auto-tailoring fresh resume for {company} — {title}...")
                 try:
-                    desc = r[5]
+                    desc = description
                     if not desc or len(desc.strip()) < 10:
-                        # Fallback: Scrape description on-the-fly!
-                        scraped = scrape_custom_job_page(r[4])
+                        scraped = scrape_custom_job_page(url)
                         desc = scraped.get('description', '')
-                    job_dict = {"company": r[0], "title": r[1], "url": r[4], "description": desc}
+                    job_dict = {"company": company, "title": title, "url": url, "description": desc}
                     generate_tailored_resume(job_dict, profile)
                 except Exception as e:
                     print(f"⚠️ Resume tailoring fail: {e}")
             
-            body += f"  {idx + 1}. {r[0]} — {r[1]} ({r[2]}% match score)\n"
-            body += f"     🔗 Direct Apply Link: {r[4]}\n"
-            body += f"     📄 Auto-Tailored LaTeX Resume: tailored_resumes/{company_clean}_{title_clean}_Resume.tex\n"
-            body += f"     📋 Alignment Audit Report: tailored_resumes/{company_clean}_{title_clean}_Alignment.md\n"
-            body += f"     🎯 Target Prep Playbook:\n{r[3]}\n\n"
+            body += f"  {idx + 1}. {company} — {title} ({match_score}% match)\n"
+            body += f"     🔗 Apply Link : {url}\n"
+            body += f"     📄 LaTeX Resume: tailored_resumes/{company_clean}_{title_clean}_Resume.tex\n"
+            body += f"     📄 PDF Resume  : tailored_resumes/{company_clean}_{title_clean}_Resume.pdf\n"
+            body += f"     📋 Alignment MD: tailored_resumes/{company_clean}_{title_clean}_Alignment.md\n"
+            body += f"     🎯 Prep Playbook:\n{prep_plan}\n\n"
             
+            emailed_job_ids.append(job_id)
+    
     body += f"\n============================================================\n"
     body += f"This is an automated background operational report from JobCraft AI.\n"
     
     send_email_update(body)
     print("Daily operational report emailed successfully.")
+    
+    # Mark these jobs as emailed NOW (after successful send) to drive rotation on next run
+    if emailed_job_ids:
+        now_iso = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        for jid in emailed_job_ids:
+            cursor.execute("UPDATE jobs SET last_emailed=? WHERE id=?", (now_iso, jid))
+        conn.commit()
+        print(f"🔄 Rotation updated: {len(emailed_job_ids)} jobs marked as emailed. Next batch will be different.")
+    
+    conn.close()
 
 def main():
     init_db()
