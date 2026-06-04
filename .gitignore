@@ -6,6 +6,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+**/__pycache__/
+*.pyc
+
 # Operating system files
 .DS_Store
 Thumbs.db

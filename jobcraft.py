@@ -488,7 +488,7 @@ def trigger_apply_node():
     input("\nHit ENTER to return to menu...")
 
 def send_daily_newsletter_summary():
-    """Compiles pipeline stats and outstanding preps; transmits newsletter email with job rotation."""
+    """Compiles pipeline stats and outstanding preps; transmits newsletter email with job rotation and multi-company limits."""
     print(f"\n{BOLD}{YELLOW}📡 Generating pipeline sync newsletter summary...{RESET}")
     
     conn = sqlite3.connect('job_tracker.db')
@@ -499,18 +499,31 @@ def send_daily_newsletter_summary():
     total_count = cursor.fetchone()[0]
     cursor.execute("SELECT COUNT(*) FROM jobs WHERE status='Applied'")
     applied_count = cursor.fetchone()[0]
-    cursor.execute("SELECT COUNT(*) FROM jobs WHERE match_score >= 70 AND status='Scouted'")
+    cursor.execute("SELECT COUNT(*) FROM jobs WHERE match_score >= 80 AND status='Scouted'")
     high_priority_count = cursor.fetchone()[0]
     
-    # 2. Rotate job batches — prefer never-emailed first, then least-recently-emailed
+    # 2. STEP B: Pull 12 highly relevant jobs (>=80%) capping visibility to max 2 items per company
     cursor.execute("""
-        SELECT id, company, title, match_score, prep_plan, url, description FROM jobs 
-        WHERE match_score >= 70 AND status='Scouted' 
+        WITH RankedJobs AS (
+            SELECT id, company, title, match_score, prep_plan, url, description, last_emailed,
+                   ROW_NUMBER() OVER (
+                       PARTITION BY company 
+                       ORDER BY 
+                           CASE WHEN last_emailed IS NULL THEN 0 ELSE 1 END ASC,
+                           last_emailed ASC,
+                           match_score DESC
+                   ) as company_rank
+            FROM jobs 
+            WHERE match_score >= 80 AND status='Scouted'
+        )
+        SELECT id, company, title, match_score, prep_plan, url, description 
+        FROM RankedJobs
+        WHERE company_rank <= 2
         ORDER BY 
             CASE WHEN last_emailed IS NULL THEN 0 ELSE 1 END ASC,
             last_emailed ASC,
             match_score DESC
-        LIMIT 5
+        LIMIT 12
     """)
     backlog_roles = cursor.fetchall()
     
@@ -532,8 +545,8 @@ def send_daily_newsletter_summary():
     body += f"📊 PIPELINE METRICS STATUS:\n"
     body += f"  • Total Scouted Positions : {total_count}\n"
     body += f"  • Applications Completed   : {applied_count}\n"
-    body += f"  • Active Backlog (>=70%)   : {high_priority_count}\n"
-    body += f"  • Roles in this digest     : {len(backlog_roles)} (rotated — fresh batch each email)\n\n"
+    body += f"  • Active Backlog (>=80%)   : {high_priority_count}\n"
+    body += f"  • Roles in this digest     : {len(backlog_roles)} (diversified & rotated batch)\n\n"
     
     emailed_job_ids = []
     if backlog_roles:
@@ -673,7 +686,7 @@ def cron_scraping_mode():
     print(f"Cron finished. Added {new_jobs} new scored roles. Skipped {skipped_by_filter} unrelated roles. Quota pause status: {quota_pause}")
 
 def cron_summary_mode():
-    """Non-interactive daily summary newsletter compiler with job rotation."""
+    """Non-interactive daily summary newsletter compiler with company distribution cap and 12 total entries."""
     print("🤖 Cron trigger: compiling daily pipeline newsletter...")
     init_db()
     
@@ -684,17 +697,28 @@ def cron_summary_mode():
     cursor.execute("SELECT COUNT(*) FROM jobs WHERE status='Applied'")
     applied_count = cursor.fetchone()[0]
     
-    # --- JOB ROTATION FIX ---
-    # Prioritise jobs that have NEVER been emailed (last_emailed IS NULL),
-    # then rotate through least-recently-emailed to prevent the same 5 repeating.
+    # --- STEP B IMPLEMENTATION: 12 rows maximum, distributed company layout via window logic ---
     cursor.execute("""
-        SELECT id, company, title, match_score, prep_plan, url, description FROM jobs 
-        WHERE match_score >= 70 AND status='Scouted' 
+        WITH RankedJobs AS (
+            SELECT id, company, title, match_score, prep_plan, url, description, last_emailed,
+                   ROW_NUMBER() OVER (
+                       PARTITION BY company 
+                       ORDER BY 
+                           CASE WHEN last_emailed IS NULL THEN 0 ELSE 1 END ASC,
+                           last_emailed ASC,
+                           match_score DESC
+                   ) as company_rank
+            FROM jobs 
+            WHERE match_score >= 80 AND status='Scouted'
+        )
+        SELECT id, company, title, match_score, prep_plan, url, description 
+        FROM RankedJobs
+        WHERE company_rank <= 2
         ORDER BY 
             CASE WHEN last_emailed IS NULL THEN 0 ELSE 1 END ASC,
             last_emailed ASC,
             match_score DESC
-        LIMIT 5
+        LIMIT 12
     """)
     backlog_roles = cursor.fetchall()
     
@@ -714,7 +738,7 @@ def cron_summary_mode():
     body += f"📊 PIPELINE METRICS STATUS:\n"
     body += f"  • Total Scouted Positions : {total_count}\n"
     body += f"  • Applications Completed   : {applied_count}\n"
-    body += f"  • Roles in this digest     : {len(backlog_roles)} (rotated — new batch each run)\n\n"
+    body += f"  • Roles in this digest     : {len(backlog_roles)} (rotated — unique mixed batch)\n\n"
     
     emailed_job_ids = []
     if backlog_roles:

@@ -42,8 +42,8 @@ def init_db():
 
 def send_email_update(message_body: str):
     """Sends a free email notification tracking dashboard statuses and interview plans with robust failover."""
-    sender_emails = ["yogitasingla93@gmail.com", "yogitasinglamittal@gmail.com", "yogitamittal.tech@gmail.com"]
-    receiver_emails = ["yogitasingla93@gmail.com", "yogitasinglamittal@gmail.com", "yogitamittal.tech@gmail.com"]
+    sender_emails = ["yogitamittal.tech@gmail.com", "yogitasingla93@gmail.com", "yogitasinglamittal@gmail.com"]
+    receiver_emails = ["yogitamittal.tech@gmail.com", "yogitasingla93@gmail.com", "yogitasinglamittal@gmail.com"]
     
     # Ingest candidate profile if available to fetch custom emails
     if os.path.exists("candidate_profile.json"):

@@ -4,8 +4,8 @@ on:
   schedule:
     # 1. Scraping crawler runs every 8 hours (00:00, 08:00, 16:00 UTC)
     - cron: '0 */8 * * *'
-    # 2. Newsletter summary runs daily at 04:30 UTC (10:00 AM IST)
-    - cron: '30 4 * * *'
+    # 2. Optimized Newsletter summary: runs every 2 days at 04:30 UTC (10:00 AM IST) to prevent email burnout
+    - cron: '30 4 */2 * *'
   workflow_dispatch: # Allows manual trigger directly from GitHub UI
 
 jobs:
@@ -49,17 +49,37 @@ jobs:
       run: |
         python jobcraft.py --cron-check
 
-    - name: Run Daily Newsletter Email
-      # Run newsletter if it's a manual trigger or the 10:00 AM cron
-      if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '30 4 * * *')
+    - name: Run Newsletter Email
+      # Run newsletter summary if it's a manual trigger or the 2-day cron
+      if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '30 4 */2 * *')
       run: |
         python jobcraft.py --cron-summary
 
-    - name: Commit and Push Database & Resumes
-      # Automatically sync database, tailored LaTeX/PDF resumes, and alignment audits back to repo
+    # ==========================================
+    # STEP D IMPLEMENTATION: EXPOSE GENERATED ASSETS 
+    # ==========================================
+    - name: Upload Generated Resumes and Prep Packs to Browser
+      uses: actions/upload-artifact@v4
+      with:
+        name: compiled-job-applications-bundle
+        path: |
+          tailored_resumes/*.pdf
+          tailored_resumes/*.tex
+          tailored_resumes/*.md
+          company_briefs/*.md
+        retention-days: 14
+
+    # ==========================================
+    # CONSOLIDATED DATA PERSISTENCE LAYER
+    # ==========================================
+    - name: Commit and Push All Pipeline Changes
       run: |
         git config --global user.name "JobCraft AI Bot"
         git config --global user.email "jobcraft-agent@github.com"
+        
+        # Stage everything together safely
         git add job_tracker.db candidate_profile.json tailored_resumes/ company_briefs/ || true
+        
+        # Commit and push in one single operation to protect branch history integrity
         git commit -m "🤖 Auto-sync: scouted roles, tailored resumes & PDFs, alignment audits [skip ci]" || exit 0
-        git push
+        git push origin HEAD:${{ github.ref_name }}
