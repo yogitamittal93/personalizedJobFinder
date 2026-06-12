@@ -3,92 +3,173 @@ import json
 from dotenv import load_dotenv
 from gemini_client import llm
 
-def evaluate_and_prioritize(job: dict, profile: dict) -> dict:
+load_dotenv()
+
+
+def evaluate_and_prioritize(job: dict, profile: dict, search_goals: dict = None) -> dict:
     """
-    Evaluates a job listing against the candidate's living profile using Gemini.
-    Provides structured matching, scoring, and flags unknown application fields.
-    Prioritization criteria:
-      1. Alignment Score (0-100)
-      2. Estimated Competition Level (High/Medium/Low)
-      3. Company Growth Signals (High/Medium/Low)
-      4. Compensation Signals (Salary ranges / Tier details)
+    Evaluates a job listing against the candidate profile AND search goals using Gemini.
+
+    Scoring is weighted toward what Yogita is actually looking for:
+    - martech / email automation roles
+    - ecommerce / DTC / WordPress
+    - growth engineering / founding engineer
+    - generalist senior roles at early-stage startups
+
+    Returns a dict with match_score, eval_status, and all analysis fields.
+    eval_status = 'verified'   → Gemini scored it successfully
+    eval_status = 'unverified' → Gemini failed, fallback used, review manually
     """
-    # Serialize profile for the prompt context
     profile_str = json.dumps(profile, indent=2)
-    
+
+    # Build the search goals section for the prompt
+    if search_goals:
+        goals_str = f"""
+=== CANDIDATE'S SEARCH GOALS (use these to weight the score) ===
+Target Roles: {', '.join(search_goals.get('target_roles', []))}
+
+Priority Signals (reward roles that match these):
+{chr(10).join(f'  + {p}' for p in search_goals.get('priorities', []))}
+
+Candidate Strengths to Match Against JD:
+{', '.join(search_goals.get('strengths', []))}
+
+Deal Breakers (heavily penalise or score 0 if present):
+{chr(10).join(f'  - {d}' for d in search_goals.get('deal_breakers', []))}
+
+SCORING GUIDANCE:
+- A role that matches 3+ priority signals AND uses 4+ of her strengths = 85-100
+- A standard full-stack role with some overlap = 70-84
+- A role that conflicts with any deal breaker = score it 0-30 regardless of tech overlap
+- Pure ML researcher / C++ systems / US work auth required = 0
+- eCommerce + email automation + remote = strong bonus, push score up
+- "Founding engineer" or "generalist" language in JD = strong bonus
+"""
+    else:
+        goals_str = "No search goals provided — score purely on tech stack overlap."
+
     prompt = f"""
-    You are the Elite Evaluator Core of JobCraft AI.
-    Your mission is to perform a deep technical and operational alignment audit for this position:
-    
-    Company: {job.get('company', 'Unknown')}
-    Title: {job.get('title', 'Unknown')}
-    URL: {job.get('url', 'Unknown')}
-    Description: {job.get('description', '')}
-    
-    Candidate Living Profile Context:
-    {profile_str}
-    
-    Perform the following tasks:
-    1. ALIGNMENT AUDIT & SCORING:
-       Calculate an alignment score from 0 to 100 based on core tech stack overlap, architecture ownership overlap, and remote/async suitability.
-       Explain the scoring with concrete citations of matching companies, projects, or skill elements in the candidate profile (e.g. "[Measured Inc.]", "[Lakshmi Iron Company]").
-       
-    2. COMPETITION LEVEL:
-       Estimate the competition level (High, Medium, Low) based on the company's brand size (e.g. FAANG/Stripe/Airbnb is High; small startups are Low-Medium) and job platform.
-       
-    3. GROWTH SIGNALS:
-       Analyze company growth signals (e.g. recent product momentum, market tier, tech expansion) from the description and company profile.
-       
-    4. COMPENSATION & TIERING:
-       Extract any compensation details or salary ranges. If none are explicitly stated, estimate a compensation tier from 1 (Premium/FAANG/High-growth unicorn) to 3 (standard startup).
-       
-    5. INTERVIEW PROCESS PREDICTION:
-       Predict or outline their interview process stages. If it is a known brand, list their exact pipeline.
-       
-    6. PREPARATION PLAN:
-       Provide a 3-bullet technical prep directive targeting what specific architectural/coding concepts the candidate must review for this opening.
-       
-    7. UNKNOWN FIELDS DETECTION (LEARNING_MODE):
-       Review standard job application requirements and any specific questions in the job description (e.g. "Do you have WordPress VIP scaling experience?", "Desired salary?", "U.S. Work authorization?").
-       Compare these against the candidate's known profile data and "custom_responses".
-       If a required detail or answer cannot be found or inferred from the known data, explicitly flag it in the "unknown_fields" array using the format:
-       "UNKNOWN: [field name] — please provide your answer."
-       
-       Ensure that you NEVER fabricate details. If the candidate has not answered it and it's not in their profile, it MUST be flagged as UNKNOWN.
-       
-    Return a clean JSON object with keys:
-      - 'match_score': integer (0 to 100)
-      - 'competition_level': string ("High" | "Medium" | "Low")
-      - 'growth_signals': string ("High" | "Medium" | "Low")
-      - 'compensation_signals': string (salary text or "Tier [X]")
-      - 'tier': integer (1 | 2 | 3)
-      - 'interview_process': string (bulleted stages)
-      - 'prep_plan': string (3 bullets)
-      - 'citations': list of strings (citing companies, projects, or sections matched, e.g. ["Measured Inc. - HubSpot Integration", "Lakshmi Iron - Next.js"])
-      - 'unknown_fields': list of strings
-      
-    Ensure the response is ONLY a raw, valid JSON block. Do not include markdown code wrappers (like ```json). Ensure quotes are perfectly escaped.
-    """
-    
+You are the Elite Evaluator Core of JobCraft AI.
+Your mission is to perform a deep alignment audit for this position against
+Yogita Singla's profile AND her specific search goals.
+
+=== TARGET POSITION ===
+Company: {job.get('company', 'Unknown')}
+Title: {job.get('title', 'Unknown')}
+URL: {job.get('url', 'Unknown')}
+Description: {job.get('description', '')}
+
+=== CANDIDATE LIVING PROFILE ===
+{profile_str}
+
+{goals_str}
+
+=== EVALUATION TASKS ===
+
+1. ALIGNMENT SCORE (0-100):
+   Score based on:
+   a) Tech stack overlap with candidate's strengths
+   b) Role type match against target roles list
+   c) Priority signal matches (each match = +5 to +10 points)
+   d) Deal breaker penalties (any match = -40 to -100 points)
+   Cite specific matches from profile (e.g. "[HubSpot at Measured Inc.]", "[WooCommerce — Gardens Alive]").
+
+2. WHY IT FITS (1-2 sentences):
+   A concise human-readable reason why this role suits Yogita specifically.
+   Reference her actual background. E.g. "Klaviyo integration role matches her
+   lifecycle automation work at Gardens Alive and Measured Inc."
+   If it does NOT fit well, say so honestly.
+
+3. COMPETITION LEVEL:
+   High = FAANG / Stripe / well-known brand with 1000s of applicants
+   Medium = Series B-D startup, recognisable name
+   Low = early stage, niche tool, or indie company
+
+4. GROWTH SIGNALS:
+   High / Medium / Low — based on JD language, company stage, market tier.
+
+5. COMPENSATION & TIERING:
+   Extract explicit salary if mentioned. Otherwise estimate:
+   Tier 1 = $120k+ USD equivalent
+   Tier 2 = $80-120k USD equivalent
+   Tier 3 = below $80k or unknown
+
+6. INTERVIEW PROCESS PREDICTION:
+   Based on company type and size, outline expected stages (1-2 lines each).
+   If it is a known company, describe their actual process.
+
+7. PREPARATION PLAN (3 bullets):
+   Specific to THIS role and THIS company. Not generic advice.
+   Reference Yogita's existing experience where relevant.
+
+8. UNKNOWN FIELDS DETECTION:
+   Scan the JD for application questions or requirements not in the profile
+   (e.g. "salary expectation", "US work auth", "years with X framework").
+   Flag anything that cannot be answered from existing profile data.
+
+=== OUTPUT FORMAT ===
+Return ONLY a raw valid JSON object. No markdown fences. No explanation outside JSON.
+
+Keys required:
+{{
+  "match_score": <integer 0-100>,
+  "why_fit": <string — 1-2 sentences, honest fit summary>,
+  "competition_level": <"High" | "Medium" | "Low">,
+  "growth_signals": <"High" | "Medium" | "Low">,
+  "compensation_signals": <string>,
+  "tier": <1 | 2 | 3>,
+  "interview_process": <string — bulleted stages>,
+  "prep_plan": <string — 3 specific bullets>,
+  "citations": <list of strings>,
+  "unknown_fields": <list of strings>
+}}
+
+Ensure all string values use escaped quotes where needed. Valid JSON only.
+"""
+
     try:
         response = llm.invoke([prompt])
         clean_content = response.content.strip()
+
+        # Strip markdown fences if Gemini wraps the response
         if clean_content.startswith("```"):
             clean_content = clean_content.replace("```json", "").replace("```", "").strip()
-            
+
         result = json.loads(clean_content)
+
+        # Enforce bounds — Gemini occasionally returns 101 or -5
+        result['match_score'] = max(0, min(100, int(result.get('match_score', 0))))
+
+        # Mark as verified — Gemini scored it successfully
+        result['eval_status'] = 'verified'
+
         return result
+
     except Exception as e:
-        print(f"⚠️ Error evaluating role via Gemini: {e}")
-        # Fallback structured matching
+        print(f"⚠️ Gemini evaluation failed for {job.get('company')} — {job.get('title')}: {e}")
+
+        # ── Fallback: store at 75 but mark as UNVERIFIED ─────────────────
+        # The digest email will show ⚠️ next to this job so you know
+        # to review it manually before applying.
         return {
             "match_score": 75,
-            "competition_level": "Medium",
-            "growth_signals": "Medium",
-            "compensation_signals": "Tier 2",
+            "why_fit": "⚠️ Unverified — Gemini failed. Review this role manually.",
+            "competition_level": "Unknown",
+            "growth_signals": "Unknown",
+            "compensation_signals": "Unknown",
             "tier": 2,
-            "interview_process": "1. Resume Screening\n2. Technical Screening\n3. System Design & Code Review\n4. Culture Match",
-            "prep_plan": "• Review core Next.js / Serverless API integration patterns.\n• Practice standard distributed system design.\n• Review WordPress & HubSpot webhooks.",
-            "citations": ["Portfolio - General Stack Integration"],
-            "unknown_fields": []
+            "interview_process": (
+                "1. Resume Screening\n"
+                "2. Technical Screening\n"
+                "3. System Design & Code Review\n"
+                "4. Culture Match"
+            ),
+            "prep_plan": (
+                "• Review core Next.js / Node.js / NestJS patterns.\n"
+                "• Practice WordPress / WooCommerce integration scenarios.\n"
+                "• Review HubSpot / Klaviyo webhook and API integration patterns."
+            ),
+            "citations": ["Fallback — Gemini API unavailable"],
+            "unknown_fields": [],
+            "eval_status": "unverified"   # ← key flag — main.py reads this
         }
