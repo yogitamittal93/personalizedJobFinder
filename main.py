@@ -384,11 +384,8 @@ def main():
     new_evaluated = 0
 
     for job in listings:
-        # Skip companies you've blocklisted
         if job['company'].lower() in avoid:
             continue
-
-        # Skip if URL already in DB
         cursor.execute("SELECT id FROM jobs WHERE url=?", (job['url'],))
         if cursor.fetchone():
             continue
@@ -414,7 +411,6 @@ def main():
                 eval_status
             ))
         else:
-            # Log near-misses (70-79) for weekly manual review
             if analysis['match_score'] >= 70:
                 cursor.execute('''
                     INSERT OR IGNORE INTO jobs_below_threshold
@@ -428,98 +424,12 @@ def main():
 
         conn.commit()
 
-    print(f"\n✅ Evaluated {new_evaluated} new listings.")
-
-    # ── Step 2: Pick digest — 12 unsent, max 2 per company, no title dupes ─
-    cursor.execute('''
-        SELECT id, company, title, url, match_score,
-               interview_process, prep_plan, eval_status
-        FROM jobs
-        WHERE emailed_at IS NULL
-        ORDER BY
-            CASE WHEN eval_status = 'verified' THEN 0 ELSE 1 END,
-            match_score DESC
-    ''')
-    # ↑ verified jobs float to top; within each group, sorted by score
-    candidates = cursor.fetchall()
-
-    company_counts = {}
-    seen_titles = set()
-    digest_jobs = []
-
-    for row in candidates:
-        job_id, company, title, url, score, interview_process, prep_plan, eval_status = row
-        company_key = company.lower().strip()
-        title_key = f"{company_key}::{title.lower().strip()}"
-
-        # Respect avoid list for jobs that were stored before you added a company
-        if company_key in avoid:
-            continue
-
-        # Max 2 per company
-        if company_counts.get(company_key, 0) >= 2:
-            continue
-
-        # No duplicate title+company (same role on two URLs)
-        if title_key in seen_titles:
-            continue
-
-        company_counts[company_key] = company_counts.get(company_key, 0) + 1
-        seen_titles.add(title_key)
-
-        digest_jobs.append({
-            'id': job_id,
-            'company': company,
-            'title': title,
-            'url': url,
-            'score': score,
-            'interview_process': interview_process or '—',
-            'prep_plan': prep_plan or '—',
-            'eval_status': eval_status or 'verified',
-            'why_fit': ''  # populated by evaluator if it returns why_fit key
-        })
-
-        if len(digest_jobs) >= 12:
-            break
-
-    # ── Step 3: Send digest or heartbeat ────────────────────────────────────
-    if not digest_jobs:
-        send_email_update(
-            subject="✅ Job Agent Ran — No New Matches Today",
-            plain_body=(
-                f"PersonalizedJobFinder ran at {datetime.utcnow().strftime('%b %d %Y %H:%M')} UTC.\n\n"
-                f"No new jobs above the 80-point threshold were found this cycle.\n\n"
-                f"The pipeline is healthy — check back next run.\n\n"
-                f"💡 Tip: To see near-miss roles (scored 70-79), query the\n"
-                f"jobs_below_threshold table in job_tracker.db"
-            )
-        )
-        print("✅ Heartbeat sent — no new matches this cycle.")
-        conn.close()
-        return
-
-    plain, html = build_html_email(digest_jobs)
-    verified = sum(1 for j in digest_jobs if j.get('eval_status') != 'unverified')
-    unverified = len(digest_jobs) - verified
-
-    subject = f"🚀 {len(digest_jobs)} Fresh Job Matches — {datetime.utcnow().strftime('%b %d')}"
-    if unverified > 0:
-        subject += f" ({unverified} ⚠️ unverified)"
-
-    send_email_update(subject=subject, plain_body=plain, html_body=html)
-
-    # ── Step 4: Mark all digested jobs as emailed so they never repeat ──────
-    now = datetime.utcnow().isoformat()
-    for j in digest_jobs:
-        cursor.execute(
-            "UPDATE jobs SET emailed_at=? WHERE id=?",
-            (now, j['id'])
-        )
-    conn.commit()
     conn.close()
-
-    print(f"\n🎉 Digest sent — {len(digest_jobs)} jobs ({verified} verified, {unverified} unverified).")
+    print(f"\n✅ Evaluated {new_evaluated} new listings.")
+    print("ℹ️  Email digest is sent by jobcraft.py --cron-summary (the single email orchestrator).")
+    print("   Run: python jobcraft.py --cron-summary")
 
 
 if __name__ == "__main__":
     main()
+

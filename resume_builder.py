@@ -142,55 +142,175 @@ and sends HTML digest emails with match scoring and interview prep plans.
 
 
 # ─────────────────────────────────────────────
-# PDF COMPILER
+# WORD DOCUMENT BUILDER
+# Converts structured plain-text resume sections
+# from Gemini into a properly formatted .docx
 # ─────────────────────────────────────────────
-def compile_tex_to_pdf(tex_path: str) -> str:
-    import subprocess
-    import shutil
+def build_docx(sections: dict, company: str, title: str, docx_path: str) -> str:
+    """
+    Takes parsed resume sections dict and writes an ATS-safe Word document.
+    sections keys: summary, skills, experience, projects, education
+    """
+    from docx import Document
+    from docx.shared import Pt, RGBColor
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
 
-    if not shutil.which("pdflatex"):
-        print("⚠️  pdflatex not found. Install MiKTeX (Windows) or TeX Live (Linux/Mac).")
-        return ""
+    doc = Document()
 
-    tex_dir = os.path.dirname(tex_path)
-    tex_file = os.path.basename(tex_path)
-    base_name = os.path.splitext(tex_file)[0]
+    # ── Page margins (narrow) ────────────────────────────────────────────────
+    for section in doc.sections:
+        section.top_margin    = Pt(36)
+        section.bottom_margin = Pt(36)
+        section.left_margin   = Pt(46)
+        section.right_margin  = Pt(46)
 
-    print(f"📄 Compiling LaTeX → PDF: {tex_file}...")
-    try:
-        for pass_num in range(2):
-            result = subprocess.run(
-                ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", tex_file],
-                cwd=tex_dir,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True,
-                timeout=120
-            )
-            if result.returncode != 0:
-                print(f"❌ pdflatex failed (pass {pass_num + 1}):")
-                print('\n'.join(result.stdout.split('\n')[-30:]))
-                return ""
+    # ── Default style ────────────────────────────────────────────────────────
+    style = doc.styles['Normal']
+    style.font.name = 'Calibri'
+    style.font.size = Pt(10)
 
-        for ext in [".aux", ".log", ".out", ".toc", ".fls", ".fdb_latexmk"]:
-            aux = os.path.join(tex_dir, base_name + ext)
-            if os.path.exists(aux):
-                os.remove(aux)
+    def add_section_heading(text):
+        p = doc.add_paragraph()
+        run = p.add_run(text.upper())
+        run.bold = True
+        run.font.size = Pt(11)
+        run.font.color.rgb = RGBColor(0x1d, 0x4e, 0xd8)  # brand blue
+        p.paragraph_format.space_before = Pt(10)
+        p.paragraph_format.space_after  = Pt(2)
+        # Add a bottom border via paragraph border (simple rule)
+        from docx.oxml.ns import qn
+        from docx.oxml import OxmlElement
+        pPr = p._p.get_or_add_pPr()
+        pBdr = OxmlElement('w:pBdr')
+        bottom = OxmlElement('w:bottom')
+        bottom.set(qn('w:val'), 'single')
+        bottom.set(qn('w:sz'), '6')
+        bottom.set(qn('w:space'), '1')
+        bottom.set(qn('w:color'), '1d4ed8')
+        pBdr.append(bottom)
+        pPr.append(pBdr)
 
-        pdf_path = os.path.join(tex_dir, base_name + ".pdf")
-        if os.path.exists(pdf_path):
-            print(f"✅ PDF compiled: {pdf_path}")
-            return pdf_path
+    def add_bullet(text):
+        # Remove leading hyphens/bullets from Gemini output
+        clean = text.lstrip('-•* ').strip()
+        if not clean:
+            return
+        p = doc.add_paragraph(style='List Bullet')
+        p.paragraph_format.left_indent  = Pt(14)
+        p.paragraph_format.space_before = Pt(0)
+        p.paragraph_format.space_after  = Pt(1)
+        run = p.add_run(clean)
+        run.font.size = Pt(10)
 
-        print("⚠️  pdflatex succeeded but no PDF found.")
-        return ""
+    # ── Name header ─────────────────────────────────────────────────────────
+    name_p = doc.add_paragraph()
+    name_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    name_run = name_p.add_run(CANDIDATE_HEADER['name'])
+    name_run.bold = True
+    name_run.font.size = Pt(18)
 
-    except subprocess.TimeoutExpired:
-        print("❌ pdflatex timed out (>120s).")
-        return ""
-    except Exception as e:
-        print(f"❌ PDF compilation error: {e}")
-        return ""
+    contact_p = doc.add_paragraph()
+    contact_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    contact_p.paragraph_format.space_before = Pt(2)
+    contact_p.paragraph_format.space_after  = Pt(6)
+    contact_text = (
+        f"{CANDIDATE_HEADER['email']}  |  "
+        f"{CANDIDATE_HEADER['portfolio']}  |  "
+        f"{CANDIDATE_HEADER['github']}  |  "
+        f"{CANDIDATE_HEADER['location']}"
+    )
+    contact_run = contact_p.add_run(contact_text)
+    contact_run.font.size = Pt(9)
+    contact_run.font.color.rgb = RGBColor(0x6b, 0x72, 0x80)
+
+    # ── Professional Summary ─────────────────────────────────────────────────
+    if sections.get('summary'):
+        add_section_heading('Professional Summary')
+        p = doc.add_paragraph(sections['summary'].strip())
+        p.paragraph_format.space_after = Pt(4)
+
+    # ── Core Skills ─────────────────────────────────────────────────────────
+    if sections.get('skills'):
+        add_section_heading('Core Skills')
+        for line in sections['skills'].strip().splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            if ':' in line:
+                # "Languages: PHP, JS" → bold label, normal text
+                label, _, rest = line.partition(':')
+                p = doc.add_paragraph()
+                p.paragraph_format.space_before = Pt(0)
+                p.paragraph_format.space_after  = Pt(1)
+                lbl_run = p.add_run(label.strip() + ': ')
+                lbl_run.bold = True
+                lbl_run.font.size = Pt(10)
+                p.add_run(rest.strip()).font.size = Pt(10)
+            else:
+                add_bullet(line)
+
+    # ── Professional Experience ──────────────────────────────────────────────
+    if sections.get('experience'):
+        add_section_heading('Professional Experience')
+        for line in sections['experience'].strip().splitlines():
+            stripped = line.strip()
+            if not stripped:
+                continue
+            if stripped.startswith('-') or stripped.startswith('•'):
+                add_bullet(stripped)
+            else:
+                # Company/title line — bold it
+                p = doc.add_paragraph()
+                p.paragraph_format.space_before = Pt(6)
+                p.paragraph_format.space_after  = Pt(1)
+                run = p.add_run(stripped)
+                run.bold = True
+                run.font.size = Pt(10)
+
+    # ── Key Projects ─────────────────────────────────────────────────────────
+    if sections.get('projects'):
+        add_section_heading('Key Projects')
+        for line in sections['projects'].strip().splitlines():
+            stripped = line.strip()
+            if not stripped:
+                continue
+            if stripped.startswith('-') or stripped.startswith('•'):
+                add_bullet(stripped)
+            else:
+                p = doc.add_paragraph()
+                p.paragraph_format.space_before = Pt(6)
+                p.paragraph_format.space_after  = Pt(1)
+                run = p.add_run(stripped)
+                run.bold = True
+                run.font.size = Pt(10)
+
+    # ── Education ────────────────────────────────────────────────────────────
+    if sections.get('education'):
+        add_section_heading('Education')
+        for line in sections['education'].strip().splitlines():
+            stripped = line.strip()
+            if not stripped:
+                continue
+            if stripped.startswith('-') or stripped.startswith('•'):
+                add_bullet(stripped)
+            else:
+                p = doc.add_paragraph(stripped)
+                p.paragraph_format.space_before = Pt(2)
+                p.paragraph_format.space_after  = Pt(1)
+
+    # ── Footer ───────────────────────────────────────────────────────────────
+    footer_p = doc.add_paragraph()
+    footer_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    footer_p.paragraph_format.space_before = Pt(12)
+    footer_run = footer_p.add_run(
+        f"Tailored for {company} — {title}  |  Generated by JobCraft AI"
+    )
+    footer_run.font.size = Pt(8)
+    footer_run.font.color.rgb = RGBColor(0x9c, 0xa3, 0xaf)
+
+    doc.save(docx_path)
+    print(f"✅ Word resume written: {docx_path}")
+    return docx_path
 
 
 # ─────────────────────────────────────────────
@@ -419,30 +539,31 @@ engineering. I pick up new stacks fast and ship things that work."
 
 # ─────────────────────────────────────────────
 # MAIN RESUME GENERATOR
+# Outputs a .docx Word file + .md alignment audit
 # ─────────────────────────────────────────────
 def generate_tailored_resume(job: dict, profile: dict) -> tuple:
     """
-    Generates a tailored, ATS-optimized LaTeX resume AND alignment audit markdown.
+    Generates a tailored, ATS-optimized Word (.docx) resume AND alignment audit markdown.
 
     The resume is shaped per role type — a growth engineering role gets a completely
     different emphasis ordering than a WordPress role or a founding engineer role.
     Company culture language is scraped and mirrored in the summary.
     Every bullet comes from the real experience bank. Nothing fabricated.
+    Returns (docx_path, md_path).
     """
     if not os.path.exists(TAILORED_RESUMES_DIR):
         os.makedirs(TAILORED_RESUMES_DIR)
 
     company = job.get('company', 'Company')
-    title = job.get('title', 'Role')
+    title   = job.get('title', 'Role')
     company_clean = re.sub(r'\W+', '', company).capitalize()
-    title_clean = re.sub(r'\W+', '', title).capitalize()
+    title_clean   = re.sub(r'\W+', '', title).capitalize()
 
-    tex_path = os.path.join(TAILORED_RESUMES_DIR, f"{company_clean}_{title_clean}_Resume.tex")
-    md_path  = os.path.join(TAILORED_RESUMES_DIR, f"{company_clean}_{title_clean}_Alignment.md")
-    pdf_path = os.path.join(TAILORED_RESUMES_DIR, f"{company_clean}_{title_clean}_Resume.pdf")
+    docx_path = os.path.join(TAILORED_RESUMES_DIR, f"{company_clean}_{title_clean}_Resume.docx")
+    md_path   = os.path.join(TAILORED_RESUMES_DIR, f"{company_clean}_{title_clean}_Alignment.md")
 
     # Always regenerate fresh — never serve stale
-    for path in [tex_path, md_path, pdf_path]:
+    for path in [docx_path, md_path]:
         if os.path.exists(path):
             try:
                 os.remove(path)
@@ -466,7 +587,7 @@ def generate_tailored_resume(job: dict, profile: dict) -> tuple:
     print(f"   📌 {len(jd_keywords)} JD keywords to mirror")
 
     # ── Master prompt ────────────────────────────────────────────────────────
-    prompt = rf"""
+    prompt = f"""
 You are the Elite Resume Tailoring Engine of JobCraft AI.
 Your SOLE objective: make Yogita Singla the most compelling candidate for this specific
 role — both to ATS systems and to the human hiring manager who reads it.
@@ -507,91 +628,48 @@ Weave them naturally — do not just dump them in the skills section.
 RULE 3 — ROLE-TYPE EMPHASIS:
 Follow the ROLE TYPE EMPHASIS instructions above strictly.
 The experience sections must be REORDERED and REWEIGHTED — not just relabelled.
-If the emphasis says "suppress ML/RAG", that work gets one line or zero.
-If it says "lead with Klaviyo", Klaviyo bullets come first and are most detailed.
 
 RULE 4 — MIRROR COMPANY LANGUAGE:
 The Professional Summary MUST use words and phrases from the company's culture page
 or JD — their mission language, their values vocabulary, their product terminology.
-The hiring manager should read the summary and feel like Yogita already understands them.
 
 RULE 5 — EVERY BULLET = RESULT:
 No bullet can start with "Responsible for" or "Helped with" or "Worked on".
-Every bullet must have: Action verb + What was done + Measurable outcome or scale.
-Use exact metrics from the Experience Bank (e.g. "500k+ contacts", "40% page load reduction",
+Every bullet: Action verb + What was done + Measurable outcome or scale.
+Use real metrics from the bank (e.g. "500k+ contacts", "40% page load reduction",
 "6 brands", "157 TypeScript errors", "634MB vector DB").
 
-RULE 6 — ATS-SAFE LATEX:
-Single column only. No tabular, table, multicol, includegraphics, or custom fonts.
-Allowed packages: geometry, hyperref, titlesec, enumitem, fontenc, inputenc only.
-No colors, no icons, no boxes. Pure text structure — ATS must parse every word.
+=== OUTPUT FORMAT — PLAIN TEXT SECTIONS (no LaTeX, no markdown fences) ===
 
-RULE 7 — CITATION COMMENTS:
-Insert a LaTeX comment above every bullet: % Source: [Company name or project from bank]
-This enforces traceability — every line has a documented origin.
-
-=== LATEX HEADER (use exactly — do not modify contact details) ===
-\\documentclass[10pt,letterpaper]{{article}}
-\\usepackage[T1]{{fontenc}}
-\\usepackage[utf8]{{inputenc}}
-\\usepackage[margin=0.65in]{{geometry}}
-\\usepackage[hidelinks]{{hyperref}}
-\\usepackage{{titlesec}}
-\\usepackage{{enumitem}}
-\\pagestyle{{empty}}
-\\titleformat{{\\section}}{{\\large\\bfseries\\uppercase}}{{}}{{0em}}{{}}[\\titlerule]
-\\titlespacing{{\\section}}{{0pt}}{{8pt}}{{4pt}}
-\\setlist[itemize]{{leftmargin=*, noitemsep, topsep=2pt}}
-\\begin{{document}}
-\\begin{{center}}
-  {{\\LARGE \\textbf{{Yogita Singla}}}} \\\\
-  \\vspace{{3pt}}
-  \\href{{mailto:yogitamittal.tech@gmail.com}}{{yogitamittal.tech@gmail.com}} $\\mid$
-  \\href{{https://portfolio-three-sigma-mp0vvhcq3h.vercel.app/}}{{Portfolio}} $\\mid$
-  \\href{{https://github.com/yogitamittal93}}{{GitHub}} $\\mid$
-  Remote / India
-\\end{{center}}
-\\vspace{{-4pt}}
-
-=== RESUME SECTIONS TO GENERATE (in this order) ===
-
-1. PROFESSIONAL SUMMARY (4-5 sentences)
-   - Sentence 1: Who you are, years of experience, the specific role title verbatim.
-   - Sentence 2: Mirror the company's mission/culture language — show you get them.
-   - Sentence 3: Your strongest relevant achievement with a real metric from the bank.
-   - Sentence 4: The secondary strength most relevant to this role type.
-   - Sentence 5: What you bring that generic candidates don't (your generalist + commercial brain).
-
-2. CORE SKILLS (ordered strictly by JD relevance — most relevant first)
-   Group into: Languages | Frameworks | Databases | MarTech & Email | eCommerce |
-   AI/ML (if relevant to role) | Tools & Platforms
-   ONLY include skills actually needed for this role — cut the rest.
-   Every JD keyword that matches a skill MUST appear here exactly as written in JD.
-
-3. PROFESSIONAL EXPERIENCE (reordered per role emphasis above)
-   For each role:
-   - Company name, title, dates (use approximate ranges from bank)
-   - 4-6 bullets, each with % Source comment above it
-   - Most role-relevant bullets go first within each company
-   - Suppress bullet points that have zero relevance to this specific role
-   If role emphasis says "suppress" a whole company, give it 1-2 lines max or omit.
-
-4. KEY PROJECTS (max 3, chosen by relevance to this role)
-   Each: Project Name | Tech stack (JD-relevant tools first) | 1-2 impact bullets
-
-5. EDUCATION
-   [Use whatever is in the candidate profile JSON — do not fabricate degrees]
-
-\\end{{document}}
-
-=== OUTPUT FORMAT ===
-Return EXACTLY two blocks separated by this delimiter on its own line:
+Return EXACTLY two blocks separated by this line:
 JOBCRAFT_SPLIT_DELIMITER
 
-Block 1 (BEFORE delimiter): Raw LaTeX starting with \\documentclass. No fences. No explanation.
-Block 2 (AFTER delimiter): Markdown alignment audit starting with # Alignment Audit. No fences.
+Block 1 (BEFORE delimiter): Resume content using EXACTLY these section tags:
 
-=== ALIGNMENT AUDIT MARKDOWN TO GENERATE ===
+=== SUMMARY ===
+[4-5 sentences: who you are + role title verbatim | company language mirror |
+strongest metric achievement | secondary strength | unique differentiator]
+
+=== SKILLS ===
+[Each line: "Category: skill1, skill2, skill3" — ordered by JD relevance.
+Groups: Languages | Frameworks | Databases | MarTech & Email | eCommerce | Tools & Platforms
+Only include skills relevant to this role. Every JD keyword that maps to a skill must appear here.]
+
+=== EXPERIENCE ===
+[Company Name — Title | Approx Dates]
+- Bullet (Action verb + what + measurable result)
+- Bullet
+[Next company...]
+
+=== PROJECTS ===
+[Project Name | Tech Stack (JD-relevant first)]
+- Impact bullet
+[Max 3 projects, chosen by relevance to this role]
+
+=== EDUCATION ===
+[Whatever is in the candidate profile JSON — do not fabricate degrees]
+
+Block 2 (AFTER delimiter): Markdown alignment audit:
 
 # Alignment Audit — {company} ({title})
 ## Role Type Detected
@@ -609,11 +687,10 @@ Block 2 (AFTER delimiter): Markdown alignment audit starting with # Alignment Au
 
 ## Genuine Skill Gaps
 [Honest list of JD requirements not in experience bank. If none: "No material gaps."]
-Do NOT fabricate to fill gaps.
 
 ## Company Culture Mirror
-[Quote 2-3 phrases from the company culture page and show where they appear in the resume]
-If no culture page was found, note that and explain how JD language was used instead.
+[Quote 2-3 phrases from the company culture page and show where they appear in the resume.
+If no culture page was found, note that and explain how JD language was used instead.]
 
 ## Interview Preparation Playbook
 
@@ -652,10 +729,29 @@ Ends with a clear hook that makes them want to read more.]
 - Generated by: JobCraft AI Resume Engine
 """
 
-    print(f"🚀 Generating tailored resume for: {company} — {title} [{role_type}]")
+    print(f"🚀 Generating tailored Word resume for: {company} — {title} [{role_type}]")
 
-    max_retries   = 3
-    retry_delay   = 65
+    max_retries = 3
+    retry_delay = 65
+
+    def parse_sections(text: str) -> dict:
+        """Extracts tagged sections from Gemini plain-text output."""
+        tags = ['SUMMARY', 'SKILLS', 'EXPERIENCE', 'PROJECTS', 'EDUCATION']
+        result = {}
+        for i, tag in enumerate(tags):
+            start_marker = f"=== {tag} ==="
+            end_markers  = [f"=== {t} ===" for t in tags[i + 1:]]
+            start = text.find(start_marker)
+            if start == -1:
+                continue
+            start += len(start_marker)
+            end = len(text)
+            for em in end_markers:
+                pos = text.find(em, start)
+                if pos != -1 and pos < end:
+                    end = pos
+            result[tag.lower()] = text[start:end].strip()
+        return result
 
     for attempt in range(1, max_retries + 1):
         try:
@@ -663,50 +759,41 @@ Ends with a clear hook that makes them want to read more.]
             content  = response.content.strip()
 
             # Strip outer markdown fences if present
-            if content.startswith("```"):
-                content = re.sub(r'^```[a-z]*\n', '', content)
-                content = re.sub(r'\n```$', '', content)
+            content = re.sub(r'^```[a-z]*\n', '', content)
+            content = re.sub(r'\n```$', '', content)
 
             # Split on delimiter
             parts = re.split(r'\s*JOBCRAFT_SPLIT_DELIMITER\s*', content, maxsplit=1)
 
             if len(parts) == 2:
-                latex_code      = parts[0].strip()
+                resume_text     = parts[0].strip()
                 alignment_audit = parts[1].strip()
             else:
-                # Fallback split: try to find \end{document}
-                latex_end = re.search(r'\\end\{document\}', content)
-                if latex_end:
-                    idx             = latex_end.end()
-                    latex_code      = content[:idx].strip()
-                    alignment_audit = content[idx:].strip()
-                    if not alignment_audit.startswith("#"):
-                        alignment_audit = "# Alignment Audit\n\n⚠️ Could not cleanly separate audit. Review full output.\n\n" + alignment_audit
+                # Fallback: assume everything before first "# Alignment Audit" is resume
+                split_idx = content.find('# Alignment Audit')
+                if split_idx != -1:
+                    resume_text     = content[:split_idx].strip()
+                    alignment_audit = content[split_idx:].strip()
                 else:
-                    latex_code      = content
-                    alignment_audit = "# Alignment Audit\n\n⚠️ Split delimiter not found. Full output in .tex file."
+                    resume_text     = content
+                    alignment_audit = f"# Alignment Audit — {company} ({title})\n\n⚠️ Split delimiter not found."
 
-            # Clean residual fences inside blocks
-            latex_code      = re.sub(r'^```latex\s*\n?', '', latex_code)
-            latex_code      = re.sub(r'\n?```\s*$', '', latex_code)
+            # Clean audit fences
             alignment_audit = re.sub(r'^```markdown\s*\n?', '', alignment_audit)
             alignment_audit = re.sub(r'\n?```\s*$', '', alignment_audit)
 
-            if '\\documentclass' not in latex_code:
-                raise ValueError("Missing \\documentclass — invalid LaTeX output. Retrying.")
+            sections = parse_sections(resume_text)
+            if not sections.get('summary') and not sections.get('experience'):
+                raise ValueError("No recognisable sections found in Gemini output — retrying.")
 
-            # Write files
-            with open(tex_path, 'w', encoding='utf-8') as f:
-                f.write(latex_code)
-            print(f"✅ LaTeX resume written: {tex_path}")
+            # Build Word document
+            build_docx(sections, company, title, docx_path)
 
             with open(md_path, 'w', encoding='utf-8') as f:
                 f.write(alignment_audit)
             print(f"📋 Alignment audit written: {md_path}")
 
-            compile_tex_to_pdf(tex_path)
-
-            return tex_path, md_path
+            return docx_path, md_path
 
         except ValueError as ve:
             print(f"⚠️  Attempt {attempt}/{max_retries} — {ve}")
@@ -730,18 +817,22 @@ Ends with a clear hook that makes them want to read more.]
                     time.sleep(10)
                 continue
 
-    # All retries exhausted
+    # All retries exhausted — write minimal fallback docx
     print(f"❌ All {max_retries} attempts failed. Writing diagnostic fallback.")
 
-    fallback_tex = (
-        f"% JobCraft AI — Resume generation failed after {max_retries} retries\n"
-        f"% Company: {company} | Role: {title} | Role Type: {role_type}\n"
-        f"% Re-run when Gemini API quota resets (free tier: ~20 requests/day)\n"
-        f"\\documentclass[10pt]{{article}}\n\\begin{{document}}\n"
-        f"\\textbf{{Resume for Yogita Singla — {company} ({title})}}\\\\\n"
-        f"Generation failed due to API quota. Please re-run.\n"
-        f"\\end{{document}}"
-    )
+    fallback_sections = {
+        'summary': (
+            f"Resume generation failed after {max_retries} retries. "
+            f"Likely cause: Gemini API free-tier quota exhausted. "
+            f"Re-run when quota resets (~24h). Role: {title} at {company}."
+        ),
+        'skills':     f"Role type detected: {role_type}\nJD keywords: {keywords_str}",
+        'experience': "See job URL below for role details.",
+        'projects':   "",
+        'education':  "Refer to candidate_profile.json"
+    }
+    build_docx(fallback_sections, company, title, docx_path)
+
     fallback_md = (
         f"# Alignment Audit — {company} ({title})\n\n"
         f"> ⚠️ **Generation failed after {max_retries} retries.**\n\n"
@@ -754,10 +845,7 @@ Ends with a clear hook that makes them want to read more.]
         f"**JD keywords found:** {keywords_str}\n"
         f"**Job URL:** {job.get('url', 'N/A')}\n"
     )
-
-    with open(tex_path, 'w', encoding='utf-8') as f:
-        f.write(fallback_tex)
     with open(md_path, 'w', encoding='utf-8') as f:
         f.write(fallback_md)
 
-    return tex_path, md_path
+    return docx_path, md_path

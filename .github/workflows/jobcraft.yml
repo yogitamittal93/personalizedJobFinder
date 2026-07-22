@@ -42,11 +42,6 @@ jobs:
         pip install -r requirements.txt
         python -m playwright install chromium
 
-    - name: Install LaTeX (for PDF compilation)
-      run: |
-        sudo apt-get update -q
-        sudo apt-get install -y texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra
-
     - name: Set environment variables
       run: |
         echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> .env
@@ -88,13 +83,12 @@ jobs:
     # ==========================================
     # STEP D IMPLEMENTATION: EXPOSE GENERATED ASSETS 
     # ==========================================
-    - name: Upload Generated Resumes and Prep Packs to Browser
+    - name: Upload Generated Resumes and Audit Reports
       uses: actions/upload-artifact@v4
       with:
         name: compiled-job-applications-bundle
         path: |
-          tailored_resumes/*.pdf
-          tailored_resumes/*.tex
+          tailored_resumes/*.docx
           tailored_resumes/*.md
           company_briefs/*.md
         retention-days: 14

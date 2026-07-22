@@ -570,10 +570,9 @@ def send_daily_newsletter_summary():
                     print(f"⚠️ Resume tailoring fail: {e}")
             
             body += f"  {idx + 1}. {company} — {title} ({match_score}% match)\n"
-            body += f"     🔗 Apply Link   : {url}\n"
-            body += f"     📄 LaTeX Resume : tailored_resumes/{company_clean}_{title_clean}_Resume.tex\n"
-            body += f"     📄 PDF Resume   : tailored_resumes/{company_clean}_{title_clean}_Resume.pdf\n"
-            body += f"     📋 Alignment MD : tailored_resumes/{company_clean}_{title_clean}_Alignment.md\n"
+            body += f"     🔗 Apply     : {url}\n"
+            body += f"     📄 Resume    : https://raw.githubusercontent.com/yogitamittal93/personalizedJobFinder/master/tailored_resumes/{company_clean}_{title_clean}_Resume.docx\n"
+            body += f"     📋 Audit     : https://github.com/yogitamittal93/personalizedJobFinder/blob/master/tailored_resumes/{company_clean}_{title_clean}_Alignment.md\n"
             body += f"     🎯 Prep Playbook:\n{prep_plan}\n\n"
             
             emailed_job_ids.append(job_id)
@@ -762,10 +761,9 @@ def cron_summary_mode():
                     print(f"⚠️ Resume tailoring fail: {e}")
             
             body += f"  {idx + 1}. {company} — {title} ({match_score}% match)\n"
-            body += f"     🔗 Apply Link : {url}\n"
-            body += f"     📄 LaTeX Resume: tailored_resumes/{company_clean}_{title_clean}_Resume.tex\n"
-            body += f"     📄 PDF Resume  : tailored_resumes/{company_clean}_{title_clean}_Resume.pdf\n"
-            body += f"     📋 Alignment MD: tailored_resumes/{company_clean}_{title_clean}_Alignment.md\n"
+            body += f"     🔗 Apply     : {url}\n"
+            body += f"     📄 Resume    : https://raw.githubusercontent.com/yogitamittal93/personalizedJobFinder/master/tailored_resumes/{company_clean}_{title_clean}_Resume.docx\n"
+            body += f"     📋 Audit     : https://github.com/yogitamittal93/personalizedJobFinder/blob/master/tailored_resumes/{company_clean}_{title_clean}_Alignment.md\n"
             body += f"     🎯 Prep Playbook:\n{prep_plan}\n\n"
             
             emailed_job_ids.append(job_id)

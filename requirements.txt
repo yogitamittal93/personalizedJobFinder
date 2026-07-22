@@ -1,6 +1,6 @@
 requests
 beautifulsoup4
-pypdf
+python-docx
 langchain-google-genai
 python-dotenv
 playwright
