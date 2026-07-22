@@ -6,7 +6,17 @@ on:
     - cron: '0 */8 * * *'
     # 2. Optimized Newsletter summary: runs every 2 days at 04:30 UTC (10:00 AM IST) to prevent email burnout
     - cron: '30 4 */2 * *'
-  workflow_dispatch: # Allows manual trigger directly from GitHub UI
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Which pipeline step to run manually'
+        required: true
+        default: 'scrape'
+        type: choice
+        options:
+          - scrape
+          - newsletter
+          - both
 
 jobs:
   run-pipeline:
@@ -44,14 +54,34 @@ jobs:
         echo "EMAIL_APP_PASSWORD2=${{ secrets.EMAIL_APP_PASSWORD2 }}" >> .env
 
     - name: Run Scraping Crawler
-      # Run crawler if it's a manual trigger or the 8-hour cron
-      if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 */8 * * *')
+      # Runs on: 8-hour cron, or manual with mode=scrape or mode=both
+      if: |
+        (github.event_name == 'schedule' && github.event.schedule == '0 */8 * * *') ||
+        (github.event_name == 'workflow_dispatch' && (inputs.mode == 'scrape' || inputs.mode == 'both'))
       run: |
         python jobcraft.py --cron-check
 
+    # ==========================================
+    # CRITICAL: Persist DB immediately after scrape
+    # so the newsletter step reads a fresh DB with
+    # up-to-date last_emailed values from prior runs.
+    # ==========================================
+    - name: Persist DB after Scrape
+      if: |
+        (github.event_name == 'schedule' && github.event.schedule == '0 */8 * * *') ||
+        (github.event_name == 'workflow_dispatch' && (inputs.mode == 'scrape' || inputs.mode == 'both'))
+      run: |
+        git config --global user.name "JobCraft AI Bot"
+        git config --global user.email "jobcraft-agent@github.com"
+        git add job_tracker.db || true
+        git diff --staged --quiet || git commit -m "🤖 Scrape sync: new roles added to tracker [skip ci]"
+        git push origin HEAD:${{ github.ref_name }} || true
+
     - name: Run Newsletter Email
-      # Run newsletter summary if it's a manual trigger or the 2-day cron
-      if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '30 4 */2 * *')
+      # Runs on: 2-day cron, or manual with mode=newsletter or mode=both
+      if: |
+        (github.event_name == 'schedule' && github.event.schedule == '30 4 */2 * *') ||
+        (github.event_name == 'workflow_dispatch' && (inputs.mode == 'newsletter' || inputs.mode == 'both'))
       run: |
         python jobcraft.py --cron-summary
 
@@ -80,6 +110,6 @@ jobs:
         # Stage everything together safely
         git add job_tracker.db candidate_profile.json tailored_resumes/ company_briefs/ || true
         
-        # Commit and push in one single operation to protect branch history integrity
-        git commit -m "🤖 Auto-sync: scouted roles, tailored resumes & PDFs, alignment audits [skip ci]" || exit 0
+        # Only commit if there are actual staged changes — prevents silent no-op masking real failures
+        git diff --staged --quiet || git commit -m "🤖 Auto-sync: scouted roles, tailored resumes & PDFs, alignment audits [skip ci]"
         git push origin HEAD:${{ github.ref_name }}
