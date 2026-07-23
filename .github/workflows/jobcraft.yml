@@ -50,6 +50,7 @@ jobs:
 
     - name: Run Scraping Crawler
       # Runs on: 8-hour cron, or manual with mode=scrape or mode=both
+      timeout-minutes: 20
       if: |
         (github.event_name == 'schedule' && github.event.schedule == '0 */8 * * *') ||
         (github.event_name == 'workflow_dispatch' && (inputs.mode == 'scrape' || inputs.mode == 'both'))
@@ -63,8 +64,10 @@ jobs:
     # ==========================================
     - name: Persist DB after Scrape
       if: |
-        (github.event_name == 'schedule' && github.event.schedule == '0 */8 * * *') ||
-        (github.event_name == 'workflow_dispatch' && (inputs.mode == 'scrape' || inputs.mode == 'both'))
+        always() && (
+          (github.event_name == 'schedule' && github.event.schedule == '0 */8 * * *') ||
+          (github.event_name == 'workflow_dispatch' && (inputs.mode == 'scrape' || inputs.mode == 'both'))
+        )
       run: |
         git config --global user.name "JobCraft AI Bot"
         git config --global user.email "jobcraft-agent@github.com"
